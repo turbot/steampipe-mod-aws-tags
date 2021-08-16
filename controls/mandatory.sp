@@ -10,7 +10,7 @@ benchmark "mandatory" {
 }
 
 control "s3_bucket_has_mandatory_tags" {
-  title = "S3 bucket has mandatory tags"
+  title = "S3 buckets have mandatory tags"
   sql = <<EOT
     with input as (
       select array${replace(jsonencode(local.mandatory_tags), "\"", "'")} as mandatory_tags
@@ -42,4 +42,3 @@ control "s3_bucket_has_mandatory_tags" {
       analysis
   EOT
 }
-
