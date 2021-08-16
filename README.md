@@ -11,7 +11,7 @@ brew tap turbot/tap
 brew install steampipe
 
 steampipe -v
-steampipe version 0.7.1
+steampipe version 0.7.2
 ```
 
 2) Install the AWS plugin
@@ -21,7 +21,7 @@ steampipe plugin install aws
 
 3) Clone this repo
 ```sh
-git clone git@github.com:turbot/steampipe-mod-aws-tags
+git clone https://github.com/turbot/steampipe-mod-aws-tags.git
 cd steampipe-mod-aws-tags
 ```
 
