@@ -28,7 +28,7 @@ steampipe plugin install aws
 
 Clone:
 ```sh
-git clone git@github.com:turbot/steampipe-mod-aws-tags
+git clone https://github.com/turbot/steampipe-mod-aws-tags.git
 cd steampipe-mod-aws-tags
 ```
 
