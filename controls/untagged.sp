@@ -7,7 +7,7 @@ benchmark "untagged" {
 }
 
 control "lambda_function_untagged" {
-  title = "Lambda Untagged"
+  title = "Lambda Functions Untagged"
   sql = <<EOT
     select
       arn as resource,
@@ -28,7 +28,7 @@ control "lambda_function_untagged" {
 }
 
 control "s3_bucket_untagged" {
-  title = "S3 Untagged"
+  title = "S3 Buckets Untagged"
   sql = <<EOT
     select
       arn as resource,
