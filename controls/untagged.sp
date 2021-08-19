@@ -7,7 +7,7 @@ benchmark "untagged" {
 }
 
 control "lambda_function_untagged" {
-  title = "Lambda Functions Untagged"
+  title = "Lambda functions are not untagged"
   sql = <<EOT
     select
       arn as resource,
@@ -16,8 +16,8 @@ control "lambda_function_untagged" {
         else 'alarm'
       end as status,
       case
-        when tags is not null then name || ' has tags.'
-        else name || ' has no tags.'
+        when tags is not null then title || ' has tags.'
+        else title || ' has no tags.'
       end as reason,
       region,
       account_id
@@ -28,7 +28,7 @@ control "lambda_function_untagged" {
 }
 
 control "s3_bucket_untagged" {
-  title = "S3 Buckets Untagged"
+  title = "S3 buckets are not untagged"
   sql = <<EOT
     select
       arn as resource,
@@ -37,8 +37,8 @@ control "s3_bucket_untagged" {
         else 'alarm'
       end as status,
       case
-        when tags is not null then name || ' has tags.'
-        else name || ' has no tags.'
+        when tags is not null then title || ' has tags.'
+        else title || ' has no tags.'
       end as reason,
       region,
       account_id
