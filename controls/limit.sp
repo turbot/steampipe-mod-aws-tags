@@ -12,23 +12,24 @@ benchmark "limit" {
   ]
 }
 
-control "ec2_instance_tag_limit" {
-  title = "EC2 instances are not approaching tag limit"
+query "tag_warning_limit" {
+  title = "Tag Warning Limit"
+  description = "Check which AWS resources are approaching the tag limit."
   sql = <<EOT
     with analysis as (
       select
         arn,
         title,
-        array_length(array(select jsonb_object_keys(tags)), 1) as num_tag_keys,
+        cardinality(array(select jsonb_object_keys(tags))) as num_tag_keys,
         region,
-        account_id
+        account_id,
       from
         aws_ec2_instance
     )
     select
       arn as resource,
       case
-        when num_tag_keys > ${var.tag_warning_limit} then 'alarm'
+        when num_tag_keys > $1::integer then 'alarm'
         else 'ok'
       end as status,
       title || ' has ' || num_tag_keys || ' tags.' as reason,
@@ -37,31 +38,24 @@ control "ec2_instance_tag_limit" {
     from
       analysis
   EOT
+  params "tag_warning_limit" {
+    description = "Number of allowed before warning (AWS allows max 50)."
+    default     = var.tag_warning_limit
+  }
+}
+
+control "ec2_instance_tag_limit" {
+  title = "EC2 instances are not approaching tag limit"
+  query = query.tag_warning_limit
+  params = {
+    "table_name" = "aws_ec2_instance"
+  }
 }
 
 control "s3_bucket_tag_limit" {
   title = "S3 buckets are not approaching tag limit"
-  sql = <<EOT
-    with analysis as (
-      select
-        arn,
-        title,
-        array_length(array(select jsonb_object_keys(tags)), 1) as num_tag_keys,
-        region,
-        account_id
-      from
-        aws_s3_bucket
-    )
-    select
-      arn as resource,
-      case
-        when num_tag_keys > ${var.tag_warning_limit} then 'alarm'
-        else 'ok'
-      end as status,
-      title || ' has ' || num_tag_keys || ' tags.' as reason,
-      region,
-      account_id
-    from
-      analysis
-  EOT
+  query = query.tag_warning_limit
+  params = {
+    "table_name" = "aws_s3_bucket"
+  }
 }
