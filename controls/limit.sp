@@ -4,18 +4,8 @@ variable "tag_warning_limit" {
   default     = 40
 }
 
-benchmark "limit" {
-  title = "Limit"
-  children = [
-    control.ec2_instance_tag_limit,
-    control.s3_bucket_tag_limit
-  ]
-}
-
-query "tag_warning_limit" {
-  title = "Tag Warning Limit"
-  description = "Check which AWS resources are approaching the tag limit."
-  sql = <<EOT
+locals {
+  limit_sql = <<EOT
     with analysis as (
       select
         arn,
@@ -24,7 +14,7 @@ query "tag_warning_limit" {
         region,
         account_id,
       from
-        aws_ec2_instance
+        __TABLE_NAME__
     )
     select
       arn as resource,
@@ -38,24 +28,30 @@ query "tag_warning_limit" {
     from
       analysis
   EOT
-  params "tag_warning_limit" {
-    description = "Number of allowed before warning (AWS allows max 50)."
-    default     = var.tag_warning_limit
-  }
+}
+
+benchmark "limit" {
+  title    = "Limit"
+  children = [
+    control.ec2_instance_tag_limit,
+    control.s3_bucket_tag_limit
+  ]
 }
 
 control "ec2_instance_tag_limit" {
-  title = "EC2 instances are not approaching tag limit"
-  query = query.tag_warning_limit
-  params = {
-    "table_name" = "aws_ec2_instance"
+  title       = "EC2 instances are not approaching tag limit"
+  description = "Check if EC2 instances are approaching the tag limit."
+  sql         = replace(local.limit_sql, "__TABLE_NAME__", "aws_ec2_instance")
+  param "tag_warning_limit" {
+    default = var.tag_warning_limit
   }
 }
 
 control "s3_bucket_tag_limit" {
-  title = "S3 buckets are not approaching tag limit"
-  query = query.tag_warning_limit
-  params = {
-    "table_name" = "aws_s3_bucket"
+  title       = "S3 buckets are not approaching tag limit"
+  description = "Check if S3 buckets are approaching the tag limit."
+  sql         = replace(local.limit_sql, "__TABLE_NAME__", "aws_s3_bucket")
+  param "tag_warning_limit" {
+    default = var.tag_warning_limit
   }
 }
