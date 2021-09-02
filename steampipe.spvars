@@ -3,4 +3,4 @@ mandatory_tags = ["Environment", "Owner"]
 # Case insensitive matching
 sensitive_tags = ["Password", "Key"]
 
-tag_warning_limit = 5
+tag_limit = 5

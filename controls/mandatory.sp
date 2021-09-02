@@ -45,7 +45,7 @@ benchmark "mandatory" {
 }
 
 control "ec2_instance_mandatory" {
-  title       = "EC2 instances have mandatory tags"
+  title       = "EC2 instances should have mandatory tags"
   description = "Check if EC2 instances have mandatory tags."
   sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
   param "mandatory_tags" {
@@ -54,7 +54,7 @@ control "ec2_instance_mandatory" {
 }
 
 control "iam_role_mandatory" {
-  title       = "IAM roles have mandatory tags"
+  title       = "IAM roles should have mandatory tags"
   description = "Check if IAM roles have mandatory tags."
   sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_iam_role"), "__DIMENSIONS__", local.account_dimensions)
   param "mandatory_tags" {
@@ -62,8 +62,18 @@ control "iam_role_mandatory" {
   }
 }
 
+control "lambda_function_mandatory" {
+  title       = "Lambda functions should have mandatory tags"
+  description = "Check if Lambda functions have mandatory tags."
+  sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_lambda_function"), "__DIMENSIONS__", local.region_dimensions)
+  param "mandatory_tags" {
+    default = var.mandatory_tags
+  }
+}
+
+
 control "s3_bucket_mandatory" {
-  title       = "S3 buckets have mandatory tags"
+  title       = "S3 buckets should have mandatory tags"
   description = "Check if S3 buckets have mandatory tags."
   sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
   param "mandatory_tags" {

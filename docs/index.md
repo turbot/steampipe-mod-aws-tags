@@ -4,7 +4,7 @@ repository: "https://github.com/turbot/steampipe-mod-aws-tags"
 
 # AWS Tags Mod
 
-Run tagging controls across all your AWS accounts.
+Run tagging controls across all your AWS accounts to look for untagged resources, missing tags, resources with too many tags, and more.
 
 ## References
 
@@ -17,7 +17,6 @@ Run tagging controls across all your AWS accounts.
 ## Documentation
 
 - **[Benchmarks and controls →](https://hub.steampipe.io/mods/turbot/aws_tags/controls)**
-- **[Named queries →](https://hub.steampipe.io/mods/turbot/aws_tags/queries)**
 
 ## Get started
 
@@ -53,7 +52,23 @@ This mod uses the credentials configured in the [Steampipe AWS plugin](https://h
 
 ### Configuration
 
-No extra configuration is required.
+Several benchmarks have variables that can be configured to better match your environment and requirements. Each variable has a default defined in `steampipe.spvars`, but these can be overriden in several ways:
+
+- The `steampipe.spvars` file can be modified
+- The value in `steampipe.spvars` can be removed or commented out, after which Steampipe will prompt you for a value when running a check
+- Variables can be set by passing them in on the command line:
+  ```bash
+  steampipe check benchmark.mandatory --var 'mandatory_tags=["application", "environment", "department", "owner"]'
+  ```
+- Environment variables can also be used:
+  ```bash
+  SP_VAR_mandatory_tags='["application", "environment", "department", "owner"]' steampipe check control.ec2_instance_mandatory
+  ```
+  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value.
+
+These are some of the ways you can set variables, but for a full list, please see [Variables](https://hub.steampipe.io/linkhere).
+
+For more information on variable definition precedence, please see [Variables](https://hub.steampipe.io/linkhere).
 
 ## Get involved
 

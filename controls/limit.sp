@@ -1,6 +1,6 @@
-variable "tag_warning_limit" {
+variable "tag_limit" {
   type        = number
-  description = "Number of tags allowed before warning (AWS allows 50 max)."
+  description = "Number of tags allowed on a resource. AWS allows up to 50 tags per resource."
 }
 
 locals {
@@ -38,19 +38,19 @@ benchmark "limit" {
 }
 
 control "ec2_instance_tag_limit" {
-  title       = "EC2 instances are not approaching tag limit"
-  description = "Check if EC2 instances are approaching the tag limit."
+  title       = "EC2 instances should not exceed tag limit"
+  description = "Check if the number of tags on EC2 instances do not exceed the limit."
   sql         = replace(replace(local.limit_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
-  param "tag_warning_limit" {
-    default = var.tag_warning_limit
+  param "tag_limit" {
+    default = var.tag_limit
   }
 }
 
 control "s3_bucket_tag_limit" {
-  title       = "S3 buckets are not approaching tag limit"
-  description = "Check if S3 buckets are approaching the tag limit."
+  title       = "S3 buckets should not exceed tag limit"
+  description = "Check if the number of tags on S3 buckets do not exceed the limit."
   sql         = replace(replace(local.limit_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
-  param "tag_warning_limit" {
-    default = var.tag_warning_limit
+  param "tag_limit" {
+    default = var.tag_limit
   }
 }

@@ -1,8 +1,10 @@
 # AWS Tags Tool
 
-An AWS tags checking tool.
+An AWS tags checking tool that can be used to look for untagged resources, missing tags, resources with too many tags, and more.
 
-## Quick start
+## Getting started
+
+### Installation
 
 1) Download and install Steampipe (https://steampipe.io/downloads). Or use Brew:
 
@@ -11,26 +13,26 @@ brew tap turbot/tap
 brew install steampipe
 
 steampipe -v
-steampipe version 0.7.2
+steampipe version 0.8.0
 ```
 
-2) Install the AWS plugin
+2) Install the AWS plugin:
 ```shell
 steampipe plugin install aws
 ```
 
-3) Clone this repo
+3) Clone this repo:
 ```sh
 git clone https://github.com/turbot/steampipe-mod-aws-tags.git
 cd steampipe-mod-aws-tags
 ```
 
-4) Run all benchmarks:
+### Usage
+
+Run all benchmarks:
 ```shell
 steampipe check all
 ```
-
-### Other things to checkout
 
 Run an individual benchmark:
 ```shell
@@ -46,6 +48,26 @@ Run a specific control:
 ```shell
 steampipe check control.s3_bucket_untagged
 ```
+
+### Configuration
+
+Several benchmarks have variables that can be configured to better match your environment and requirements. Each variable has a default defined in `steampipe.spvars`, but these can be overriden in several ways:
+
+- Modify the `steampipe.spvars` file
+- Remove or comment out the value in `steampipe.spvars`, after which Steampipe will prompt you for a value when running a query or check
+- Pass in a value on the command line:
+  ```bash
+  steampipe check benchmark.mandatory --var 'mandatory_tags=["application", "environment", "department", "owner"]'
+  ```
+- Set an environment variable:
+  ```bash
+  SP_VAR_mandatory_tags='["application", "environment", "department", "owner"]' steampipe check control.ec2_instance_mandatory
+  ```
+  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value.
+
+These are some of the ways you can set variables, but for a full list, please see [Variables](https://hub.steampipe.io/linkhere).
+
+For more information on variable definition precedence, please see [Variables](https://hub.steampipe.io/linkhere).
 
 ## Contributing
 
