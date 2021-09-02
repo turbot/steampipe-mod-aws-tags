@@ -64,7 +64,7 @@ Several benchmarks have variables that can be configured to better match your en
   ```bash
   SP_VAR_mandatory_tags='["application", "environment", "department", "owner"]' steampipe check control.ec2_instance_mandatory
   ```
-  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value.
+  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
 
 These are some of the ways you can set variables, but for a full list, please see [Variables](https://hub.steampipe.io/linkhere).
 
