@@ -18,17 +18,28 @@ Run tagging controls across all your AWS accounts to look for untagged resources
 
 - **[Benchmarks and controls →](https://hub.steampipe.io/mods/turbot/aws_tags/controls)**
 
-## Get started
+## Getting started
 
-Install the AWS plugin with [Steampipe](https://steampipe.io):
+### Installation
+
+1) Install the AWS plugin:
 ```shell
 steampipe plugin install aws
 ```
 
-Clone:
+2) Clone this repo:
 ```sh
 git clone https://github.com/turbot/steampipe-mod-aws-tags.git
 cd steampipe-mod-aws-tags
+```
+
+### Usage
+
+#### Running benchmarks
+
+Preview running all benchmarks:
+```shell
+steampipe check all --dry-run
 ```
 
 Run all benchmarks:
@@ -36,9 +47,21 @@ Run all benchmarks:
 steampipe check all
 ```
 
-Run a single benchmark:
+Use Steampipe introspection to view all current benchmarks:
+```shell
+steampipe query "select resource_name, title, description from steampipe_benchmark;"
+```
+
+Run an individual benchmark:
 ```shell
 steampipe check benchmark.untagged
+```
+
+#### Running controls
+
+Use Steampipe introspection to view all current controls:
+```shell
+steampipe query "select resource_name, title, description from steampipe_control;"
 ```
 
 Run a specific control:

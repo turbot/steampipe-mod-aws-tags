@@ -29,9 +29,21 @@ cd steampipe-mod-aws-tags
 
 ### Usage
 
+#### Running benchmarks
+
+Preview running all benchmarks:
+```shell
+steampipe check all --dry-run
+```
+
 Run all benchmarks:
 ```shell
 steampipe check all
+```
+
+Use Steampipe introspection to view all current benchmarks:
+```shell
+steampipe query "select resource_name, title, description from steampipe_benchmark;"
 ```
 
 Run an individual benchmark:
@@ -39,9 +51,11 @@ Run an individual benchmark:
 steampipe check benchmark.untagged
 ```
 
+#### Running controls
+
 Use Steampipe introspection to view all current controls:
-```
-steampipe query "select resource_name from steampipe_control;"
+```shell
+steampipe query "select resource_name, title, description from steampipe_control;"
 ```
 
 Run a specific control:
@@ -56,11 +70,11 @@ Several benchmarks have variables that can be configured to better match your en
 - Modify the `steampipe.spvars` file
 - Remove or comment out the value in `steampipe.spvars`, after which Steampipe will prompt you for a value when running a query or check
 - Pass in a value on the command line:
-  ```bash
+  ```shell
   steampipe check benchmark.mandatory --var 'mandatory_tags=["application", "environment", "department", "owner"]'
   ```
 - Set an environment variable:
-  ```bash
+  ```shell
   SP_VAR_mandatory_tags='["application", "environment", "department", "owner"]' steampipe check control.ec2_instance_mandatory
   ```
   - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.

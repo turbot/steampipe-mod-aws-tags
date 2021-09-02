@@ -30,7 +30,8 @@ locals {
 }
 
 benchmark "limit" {
-  title    = "Limit"
+  title       = "Limit"
+  description = "The number of tags on each resource should be monitored to avoid hitting the limit unexpectedly."
   children = [
     control.ec2_instance_tag_limit,
     control.s3_bucket_tag_limit

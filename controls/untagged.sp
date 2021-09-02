@@ -20,6 +20,7 @@ locals {
 
 benchmark "untagged" {
   title    = "Untagged"
+  description = "Untagged resources are difficult to monitor and should be identified and remediated."
   children = [
     control.ec2_instance_untagged,
     control.iam_role_untagged,

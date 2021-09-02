@@ -43,6 +43,7 @@ locals {
 
 benchmark "sensitive" {
   title    = "Sensitive"
+  description = "High risk tag keys may contain sensitive data and should be removed."
   children = [
     control.ec2_instance_sensitive_data,
     control.s3_bucket_sensitive_data,
@@ -51,7 +52,7 @@ benchmark "sensitive" {
 
 control "s3_bucket_sensitive_data" {
   title       = "S3 buckets should not have sensitive data in tags"
-  description = "Check if S3 buckets have sensitive data in tags based on high risk tag keys."
+  description = "Check if S3 buckets have any high risk tag keys that may contain sensitive data."
   sql         = replace(replace(local.sensitive_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
   param "sensitive_tags" {
     default = var.sensitive_tags
@@ -60,7 +61,7 @@ control "s3_bucket_sensitive_data" {
 
 control "ec2_instance_sensitive_data" {
   title       = "EC2 instances should not have sensitive data in tags"
-  description = "Check if EC2 instances have sensitive data in tags based on high risk tag keys."
+  description = "Check if S3 buckets have any high risk tag keys that may contain sensitive data."
   sql         = replace(replace(local.sensitive_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
   param "sensitive_tags" {
     default = var.sensitive_tags
