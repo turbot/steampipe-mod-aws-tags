@@ -1,6 +1,6 @@
-variable "sensitive_tag_keys" {
+variable "sensitive_tags" {
     type        = list(string)
-    description = "A list of sensitive tag keys to check for (case insensitive)."
+    description = "A list of sensitive tags to check for. This check is case insensitive."
     default     = ["key", "password", "private key"]
 }
 
@@ -53,8 +53,8 @@ control "s3_bucket_sensitive_data" {
   title       = "S3 buckets do not have sensitive data in tags"
   description = "Check if S3 buckets have sensitive data in tags."
   sql         = replace(replace(local.sensitive_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
-  param "sensitive_tag_keys" {
-    default = var.sensitive_tag_keys
+  param "sensitive_tags" {
+    default = var.sensitive_tags
   }
 }
 
@@ -62,7 +62,7 @@ control "ec2_instance_sensitive_data" {
   title       = "EC2 instances do not have sensitive data in tags"
   description = "Check if EC2 instances have sensitive data in tags."
   sql         = replace(replace(local.sensitive_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
-  param "sensitive_tag_keys" {
-    default = var.sensitive_tag_keys
+  param "sensitive_tags" {
+    default = var.sensitive_tags
   }
 }
