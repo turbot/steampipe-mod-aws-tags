@@ -1,7 +1,6 @@
 variable "tag_warning_limit" {
   type        = number
   description = "Number of tags allowed before warning (AWS allows 50 max)."
-  default     = 40
 }
 
 locals {

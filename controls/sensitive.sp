@@ -1,7 +1,6 @@
 variable "sensitive_tags" {
     type        = list(string)
     description = "A list of sensitive tags to check for. This check is case insensitive."
-    default     = ["key", "password", "private key"]
 }
 
 locals {
