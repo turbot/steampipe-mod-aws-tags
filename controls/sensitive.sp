@@ -13,10 +13,11 @@ locals {
         arn,
         array_agg(k) as sensitive_tags
       from
-        input,
         __TABLE_NAME__,
         jsonb_object_keys(tags) as k,
-        ARRAY(SELECT json_array_elements_text($1)) as sensitive_key
+        -- TODO: Change once returned as jsonb intead of json
+        --unnest(ARRAY(SELECT jsonb_array_elements_text($1))) as sensitive_key
+        unnest(ARRAY(SELECT json_array_elements_text($1))) as sensitive_key
       where
         lower(k) = lower(sensitive_key)
         and k <> sensitive_key

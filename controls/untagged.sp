@@ -1,6 +1,6 @@
 locals {
-  account_dimensions = "r.account_id"
-  region_dimensions  = "r.region, r.account_id"
+  account_dimensions = "account_id"
+  region_dimensions  = "region, account_id"
   untagged_sql       = <<EOT
     select
       arn as resource,
@@ -30,17 +30,17 @@ benchmark "untagged" {
 control "ec2_instance_untagged" {
   title       = "EC2 instances are not untagged"
   description = "Check if EC2 instances have at least 1 tag."
-  sql         = replace(replace(local.sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
 }
 
 control "lambda_function_untagged" {
   title       = "Lambda functions are not untagged"
   description = "Check if Lambda functions have at least 1 tag."
-  sql         = replace(replace(local.sql, "__TABLE_NAME__", "aws_lambda_function"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(replace(local.untagged_sql, "__TABLE_NAME__", "aws_lambda_function"), "__DIMENSIONS__", local.region_dimensions)
 }
 
 control "s3_bucket_untagged" {
   title       = "S3 buckets are not untagged"
   description = "Check if S3 buckets have at least 1 tag."
-  sql         = replace(replace(local.sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(replace(local.untagged_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
 }
