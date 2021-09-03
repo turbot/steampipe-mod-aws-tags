@@ -4,9 +4,7 @@ variable "tag_limit" {
 }
 
 locals {
-  account_dimensions = "account_id"
-  region_dimensions  = "region, account_id"
-  limit_sql          = <<EOT
+  limit_sql = <<EOT
     with analysis as (
       select
         arn,
@@ -29,6 +27,11 @@ locals {
   EOT
 }
 
+locals {
+  limit_sql_account = replace(local.limit_sql, "__DIMENSIONS__", "account_id")
+  limit_sql_region  = replace(local.limit_sql, "__DIMENSIONS__", "region, account_id")
+}
+
 benchmark "limit" {
   title       = "Limit"
   description = "The number of tags on each resource should be monitored to avoid hitting the limit unexpectedly."
@@ -41,7 +44,7 @@ benchmark "limit" {
 control "ec2_instance_tag_limit" {
   title       = "EC2 instances should not exceed tag limit"
   description = "Check if the number of tags on EC2 instances do not exceed the limit."
-  sql         = replace(replace(local.limit_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_ec2_instance")
   param "tag_limit" {
     default = var.tag_limit
   }
@@ -50,7 +53,7 @@ control "ec2_instance_tag_limit" {
 control "s3_bucket_tag_limit" {
   title       = "S3 buckets should not exceed tag limit"
   description = "Check if the number of tags on S3 buckets do not exceed the limit."
-  sql         = replace(replace(local.limit_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_s3_bucket")
   param "tag_limit" {
     default = var.tag_limit
   }

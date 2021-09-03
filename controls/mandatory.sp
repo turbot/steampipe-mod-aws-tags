@@ -4,9 +4,7 @@ variable "mandatory_tags" {
 }
 
 locals {
-  account_dimensions = "account_id"
-  region_dimensions  = "region, account_id"
-  mandatory_sql      = <<EOT
+  mandatory_sql = <<EOT
     with analysis as (
       select
         arn,
@@ -27,12 +25,17 @@ locals {
       end as status,
       case
         when has_mandatory_tags then title || ' has all mandatory tags.'
-        else title || ' is missing tags ' || missing_tags
+        else title || ' is missing tags ' || array_to_string(array(select jsonb_array_elements_text(missing_tags)), ', ') || '.'
       end as reason,
       __DIMENSIONS__
     from
       analysis
   EOT
+}
+
+locals {
+  mandatory_sql_account = replace(local.mandatory_sql, "__DIMENSIONS__", "account_id")
+  mandatory_sql_region  = replace(local.mandatory_sql, "__DIMENSIONS__", "region, account_id")
 }
 
 benchmark "mandatory" {
@@ -48,7 +51,7 @@ benchmark "mandatory" {
 control "ec2_instance_mandatory" {
   title       = "EC2 instances should have mandatory tags"
   description = "Check if EC2 instances have mandatory tags."
-  sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_ec2_instance"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_ec2_instance")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
@@ -57,7 +60,7 @@ control "ec2_instance_mandatory" {
 control "iam_role_mandatory" {
   title       = "IAM roles should have mandatory tags"
   description = "Check if IAM roles have mandatory tags."
-  sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_iam_role"), "__DIMENSIONS__", local.account_dimensions)
+  sql         = replace(local.mandatory_sql_account, "__TABLE_NAME__", "aws_iam_role")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
@@ -66,17 +69,16 @@ control "iam_role_mandatory" {
 control "lambda_function_mandatory" {
   title       = "Lambda functions should have mandatory tags"
   description = "Check if Lambda functions have mandatory tags."
-  sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_lambda_function"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_lambda_function")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
 }
 
-
 control "s3_bucket_mandatory" {
   title       = "S3 buckets should have mandatory tags"
   description = "Check if S3 buckets have mandatory tags."
-  sql         = replace(replace(local.mandatory_sql, "__TABLE_NAME__", "aws_s3_bucket"), "__DIMENSIONS__", local.region_dimensions)
+  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_s3_bucket")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
