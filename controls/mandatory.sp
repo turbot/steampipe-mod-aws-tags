@@ -23,7 +23,7 @@ locals {
       end as status,
       case
         when has_mandatory_tags then title || ' has all mandatory tags.'
-        else title || ' is missing tags ' || array_to_string(array(select jsonb_array_elements_text(missing_tags)), ', ') || '.'
+        else title || ' is missing tags: ' || array_to_string(array(select jsonb_array_elements_text(missing_tags)), ', ') || '.'
       end as reason,
       __DIMENSIONS__
     from

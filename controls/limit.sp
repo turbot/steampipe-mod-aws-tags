@@ -20,7 +20,7 @@ locals {
         when num_tag_keys > $1::integer then 'alarm'
         else 'ok'
       end as status,
-      title || ' has ' || num_tag_keys || ' tags.' as reason,
+      title || ' has ' || num_tag_keys || ' tag(s).' as reason,
       __DIMENSIONS__
     from
       analysis

@@ -37,8 +37,8 @@ locals {
 }
 
 locals {
-  prohibited_sql_account = replace(local.prohibited_sql, "__DIMENSIONS__", "account_id")
-  prohibited_sql_region  = replace(local.prohibited_sql, "__DIMENSIONS__", "region, account_id")
+  prohibited_sql_account = replace(local.prohibited_sql, "__DIMENSIONS__", "r.account_id")
+  prohibited_sql_region  = replace(local.prohibited_sql, "__DIMENSIONS__", "r.region, r.account_id")
 }
 
 benchmark "prohibited" {
