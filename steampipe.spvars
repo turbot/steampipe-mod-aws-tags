@@ -1,0 +1,3 @@
+mandatory_tags = ["Environment", "Owner"]
+prohibited_tags = ["Password", "Key"]
+tag_limit = 45
