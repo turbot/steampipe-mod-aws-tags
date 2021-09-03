@@ -12,9 +12,7 @@ locals {
       from
         __TABLE_NAME__,
         jsonb_object_keys(tags) as k,
-        -- TODO: Change once returned as jsonb intead of json
-        --unnest(array(select jsonb_array_elements_text($1))) as prohibited_key
-        unnest(array(select json_array_elements_text($1))) as prohibited_key
+        unnest($1::text[]) as prohibited_key
       where
         k = prohibited_key
       group by

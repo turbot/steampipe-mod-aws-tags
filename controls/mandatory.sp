@@ -9,9 +9,7 @@ locals {
       select
         arn,
         title,
-        tags ?& ARRAY(SELECT json_array_elements_text($1)) as has_mandatory_tags,
-        -- TODO: Change after they are returned as jsonb
-        --$1 - array(select jsonb_object_keys(tags)) as missing_tags,
+        tags ?& $1 as has_mandatory_tags,
         to_jsonb($1) - array(select jsonb_object_keys(tags)) as missing_tags,
         __DIMENSIONS__
       from
