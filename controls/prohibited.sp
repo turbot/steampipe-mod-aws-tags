@@ -136,8 +136,8 @@ control "accessanalyzer_analyzer_prohibited" {
 }
 
 control "api_gateway_stage_prohibited" {
-  title       = "API gateway stages should not have prohibited tags"
-  description = "Check if API gateway stages have any prohibited tags."
+  title       = "API Gateway stages should not have prohibited tags"
+  description = "Check if API Gateway stages have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -253,8 +253,8 @@ control "dax_cluster_prohibited" {
 }
 
 control "directory_service_directory_prohibited" {
-  title       = "Directory service directories should not have prohibited tags"
-  description = "Check if Directory service directories have any prohibited tags."
+  title       = "Directory Service directories should not have prohibited tags"
+  description = "Check if Directory Service directories have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_directory_service_directory")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -559,8 +559,8 @@ control "macie2_classification_job_prohibited" {
 }
 
 control "rds_db_cluster_prohibited" {
-  title       = "RDS db clusters should not have prohibited tags"
-  description = "Check if RDS db clusters have any prohibited tags."
+  title       = "RDS DB clusters should not have prohibited tags"
+  description = "Check if RDS DB clusters have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -568,8 +568,8 @@ control "rds_db_cluster_prohibited" {
 }
 
 control "rds_db_cluster_parameter_group_prohibited" {
-  title       = "RDS db cluster parameter groups should not have prohibited tags"
-  description = "Check if RDS db cluster parameter groups have any prohibited tags."
+  title       = "RDS DB cluster parameter groups should not have prohibited tags"
+  description = "Check if RDS DB cluster parameter groups have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -577,8 +577,8 @@ control "rds_db_cluster_parameter_group_prohibited" {
 }
 
 control "rds_db_cluster_snapshot_prohibited" {
-  title       = "RDS db cluster snapshots should not have prohibited tags"
-  description = "Check if RDS db cluster snapshots have any prohibited tags."
+  title       = "RDS DB cluster snapshots should not have prohibited tags"
+  description = "Check if RDS DB cluster snapshots have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -586,8 +586,8 @@ control "rds_db_cluster_snapshot_prohibited" {
 }
 
 control "rds_db_instance_prohibited" {
-  title       = "RDS db instances should not have prohibited tags"
-  description = "Check if RDS db instances have any prohibited tags."
+  title       = "RDS DB instances should not have prohibited tags"
+  description = "Check if RDS DB instances have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_instance")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -595,8 +595,8 @@ control "rds_db_instance_prohibited" {
 }
 
 control "rds_db_option_group_prohibited" {
-  title       = "RDS db option groups should not have prohibited tags"
-  description = "Check if RDS db option groups have any prohibited tags."
+  title       = "RDS DB option groups should not have prohibited tags"
+  description = "Check if RDS DB option groups have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_option_group")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -604,8 +604,8 @@ control "rds_db_option_group_prohibited" {
 }
 
 control "rds_db_parameter_group_prohibited" {
-  title       = "RDS db parameter groups should not have prohibited tags"
-  description = "Check if RDS db parameter groups have any prohibited tags."
+  title       = "RDS DB parameter groups should not have prohibited tags"
+  description = "Check if RDS DB parameter groups have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_parameter_group")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -613,8 +613,8 @@ control "rds_db_parameter_group_prohibited" {
 }
 
 control "rds_db_snapshot_prohibited" {
-  title       = "RDS db snapshots should not have prohibited tags"
-  description = "Check if RDS db snapshots have any prohibited tags."
+  title       = "RDS DB snapshots should not have prohibited tags"
+  description = "Check if RDS DB snapshots have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_snapshot")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -622,8 +622,8 @@ control "rds_db_snapshot_prohibited" {
 }
 
 control "rds_db_subnet_group_prohibited" {
-  title       = "RDS db subnet groups should not have prohibited tags"
-  description = "Check if RDS db subnet groups have any prohibited tags."
+  title       = "RDS DB subnet groups should not have prohibited tags"
+  description = "Check if RDS DB subnet groups have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_rds_db_subnet_group")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -649,8 +649,8 @@ control "route53_domain_prohibited" {
 }
 
 control "route53_resolver_endpoint_prohibited" {
-  title       = "Route53 resolver endpoints should not have prohibited tags"
-  description = "Check if Route53 resolver endpoints have any prohibited tags."
+  title       = "Route 53 Resolver endpoints should not have prohibited tags"
+  description = "Check if Route 53 Resolver endpoints have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
   param "prohibited_tags" {
     default = var.prohibited_tags
@@ -658,8 +658,8 @@ control "route53_resolver_endpoint_prohibited" {
 }
 
 control "route53_resolver_rule_prohibited" {
-  title       = "Route53 resolver rules should not have prohibited tags"
-  description = "Check if Route53 resolver rules have any prohibited tags."
+  title       = "Route 53 Resolver rules should not have prohibited tags"
+  description = "Check if Route 53 Resolver rules have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "prohibited_tags" {
     default = var.prohibited_tags

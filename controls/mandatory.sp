@@ -131,8 +131,8 @@ control "accessanalyzer_analyzer_mandatory" {
 }
 
 control "api_gateway_stage_mandatory" {
-  title       = "API gateway stages should have mandatory tags"
-  description = "Check if API gateway stages have mandatory tags."
+  title       = "API Gateway stages should have mandatory tags"
+  description = "Check if API Gateway stages have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -248,8 +248,8 @@ control "dax_cluster_mandatory" {
 }
 
 control "directory_service_directory_mandatory" {
-  title       = "Directory service directories should have mandatory tags"
-  description = "Check if Directory service directories have mandatory tags."
+  title       = "Directory Service directories should have mandatory tags"
+  description = "Check if Directory Service directories have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_directory_service_directory")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -554,8 +554,8 @@ control "macie2_classification_job_mandatory" {
 }
 
 control "rds_db_cluster_mandatory" {
-  title       = "RDS db clusters should have mandatory tags"
-  description = "Check if RDS db clusters have mandatory tags."
+  title       = "RDS DB clusters should have mandatory tags"
+  description = "Check if RDS DB clusters have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -563,8 +563,8 @@ control "rds_db_cluster_mandatory" {
 }
 
 control "rds_db_cluster_parameter_group_mandatory" {
-  title       = "RDS db cluster parameter groups should have mandatory tags"
-  description = "Check if RDS db cluster parameter groups have mandatory tags."
+  title       = "RDS DB cluster parameter groups should have mandatory tags"
+  description = "Check if RDS DB cluster parameter groups have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -572,8 +572,8 @@ control "rds_db_cluster_parameter_group_mandatory" {
 }
 
 control "rds_db_cluster_snapshot_mandatory" {
-  title       = "RDS db cluster snapshots should have mandatory tags"
-  description = "Check if RDS db cluster snapshots have mandatory tags."
+  title       = "RDS DB cluster snapshots should have mandatory tags"
+  description = "Check if RDS DB cluster snapshots have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -581,8 +581,8 @@ control "rds_db_cluster_snapshot_mandatory" {
 }
 
 control "rds_db_instance_mandatory" {
-  title       = "RDS db instances should have mandatory tags"
-  description = "Check if RDS db instances have mandatory tags."
+  title       = "RDS DB instances should have mandatory tags"
+  description = "Check if RDS DB instances have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_instance")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -590,8 +590,8 @@ control "rds_db_instance_mandatory" {
 }
 
 control "rds_db_option_group_mandatory" {
-  title       = "RDS db option groups should have mandatory tags"
-  description = "Check if RDS db option groups have mandatory tags."
+  title       = "RDS DB option groups should have mandatory tags"
+  description = "Check if RDS DB option groups have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_option_group")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -599,8 +599,8 @@ control "rds_db_option_group_mandatory" {
 }
 
 control "rds_db_parameter_group_mandatory" {
-  title       = "RDS db parameter groups should have mandatory tags"
-  description = "Check if RDS db parameter groups have mandatory tags."
+  title       = "RDS DB parameter groups should have mandatory tags"
+  description = "Check if RDS DB parameter groups have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_parameter_group")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -608,8 +608,8 @@ control "rds_db_parameter_group_mandatory" {
 }
 
 control "rds_db_snapshot_mandatory" {
-  title       = "RDS db snapshots should have mandatory tags"
-  description = "Check if RDS db snapshots have mandatory tags."
+  title       = "RDS DB snapshots should have mandatory tags"
+  description = "Check if RDS DB snapshots have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_snapshot")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -617,8 +617,8 @@ control "rds_db_snapshot_mandatory" {
 }
 
 control "rds_db_subnet_group_mandatory" {
-  title       = "RDS db subnet groups should have mandatory tags"
-  description = "Check if RDS db subnet groups have mandatory tags."
+  title       = "RDS DB subnet groups should have mandatory tags"
+  description = "Check if RDS DB subnet groups have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_rds_db_subnet_group")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -644,8 +644,8 @@ control "route53_domain_mandatory" {
 }
 
 control "route53_resolver_endpoint_mandatory" {
-  title       = "Route53 resolver endpoints should have mandatory tags"
-  description = "Check if Route53 resolver endpoints have mandatory tags."
+  title       = "Route 53 Resolver endpoints should have mandatory tags"
+  description = "Check if Route 53 Resolver endpoints have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
   param "mandatory_tags" {
     default = var.mandatory_tags
@@ -653,8 +653,8 @@ control "route53_resolver_endpoint_mandatory" {
 }
 
 control "route53_resolver_rule_mandatory" {
-  title       = "Route53 resolver rules should have mandatory tags"
-  description = "Check if Route53 resolver rules have mandatory tags."
+  title       = "Route 53 Resolver rules should have mandatory tags"
+  description = "Check if Route 53 Resolver rules have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "mandatory_tags" {
     default = var.mandatory_tags

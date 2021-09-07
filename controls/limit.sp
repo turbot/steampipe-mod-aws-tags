@@ -127,8 +127,8 @@ control "accessanalyzer_analyzer_tag_limit" {
 }
 
 control "api_gateway_stage_tag_limit" {
-  title       = "API gateway stages should not exceed tag limit"
-  description = "Check if the number of tags on API gateway stages do not exceed the limit."
+  title       = "API Gateway stages should not exceed tag limit"
+  description = "Check if the number of tags on API Gateway stages do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
   param "tag_limit" {
     default = var.tag_limit
@@ -244,8 +244,8 @@ control "dax_cluster_tag_limit" {
 }
 
 control "directory_service_directory_tag_limit" {
-  title       = "Directory service directories should not exceed tag limit"
-  description = "Check if the number of tags on Directory service directories do not exceed the limit."
+  title       = "Directory Service directories should not exceed tag limit"
+  description = "Check if the number of tags on Directory Service directories do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_directory_service_directory")
   param "tag_limit" {
     default = var.tag_limit
@@ -550,8 +550,8 @@ control "macie2_classification_job_tag_limit" {
 }
 
 control "rds_db_cluster_tag_limit" {
-  title       = "RDS db clusters should not exceed tag limit"
-  description = "Check if the number of tags on RDS db clusters do not exceed the limit."
+  title       = "RDS DB clusters should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB clusters do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster")
   param "tag_limit" {
     default = var.tag_limit
@@ -559,8 +559,8 @@ control "rds_db_cluster_tag_limit" {
 }
 
 control "rds_db_cluster_parameter_group_tag_limit" {
-  title       = "RDS db cluster parameter groups should not exceed tag limit"
-  description = "Check if the number of tags on RDS db cluster parameter groups do not exceed the limit."
+  title       = "RDS DB cluster parameter groups should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB cluster parameter groups do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
   param "tag_limit" {
     default = var.tag_limit
@@ -568,8 +568,8 @@ control "rds_db_cluster_parameter_group_tag_limit" {
 }
 
 control "rds_db_cluster_snapshot_tag_limit" {
-  title       = "RDS db cluster snapshots should not exceed tag limit"
-  description = "Check if the number of tags on RDS db cluster snapshots do not exceed the limit."
+  title       = "RDS DB cluster snapshots should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB cluster snapshots do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
   param "tag_limit" {
     default = var.tag_limit
@@ -577,8 +577,8 @@ control "rds_db_cluster_snapshot_tag_limit" {
 }
 
 control "rds_db_instance_tag_limit" {
-  title       = "RDS db instances should not exceed tag limit"
-  description = "Check if the number of tags on RDS db instances do not exceed the limit."
+  title       = "RDS DB instances should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB instances do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_instance")
   param "tag_limit" {
     default = var.tag_limit
@@ -586,8 +586,8 @@ control "rds_db_instance_tag_limit" {
 }
 
 control "rds_db_option_group_tag_limit" {
-  title       = "RDS db option groups should not exceed tag limit"
-  description = "Check if the number of tags on RDS db option groups do not exceed the limit."
+  title       = "RDS DB option groups should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB option groups do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_option_group")
   param "tag_limit" {
     default = var.tag_limit
@@ -595,8 +595,8 @@ control "rds_db_option_group_tag_limit" {
 }
 
 control "rds_db_parameter_group_tag_limit" {
-  title       = "RDS db parameter groups should not exceed tag limit"
-  description = "Check if the number of tags on RDS db parameter groups do not exceed the limit."
+  title       = "RDS DB parameter groups should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB parameter groups do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_parameter_group")
   param "tag_limit" {
     default = var.tag_limit
@@ -604,8 +604,8 @@ control "rds_db_parameter_group_tag_limit" {
 }
 
 control "rds_db_snapshot_tag_limit" {
-  title       = "RDS db snapshots should not exceed tag limit"
-  description = "Check if the number of tags on RDS db snapshots do not exceed the limit."
+  title       = "RDS DB snapshots should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB snapshots do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_snapshot")
   param "tag_limit" {
     default = var.tag_limit
@@ -613,8 +613,8 @@ control "rds_db_snapshot_tag_limit" {
 }
 
 control "rds_db_subnet_group_tag_limit" {
-  title       = "RDS db subnet groups should not exceed tag limit"
-  description = "Check if the number of tags on RDS db subnet groups do not exceed the limit."
+  title       = "RDS DB subnet groups should not exceed tag limit"
+  description = "Check if the number of tags on RDS DB subnet groups do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_rds_db_subnet_group")
   param "tag_limit" {
     default = var.tag_limit
@@ -640,8 +640,8 @@ control "route53_domain_tag_limit" {
 }
 
 control "route53_resolver_endpoint_tag_limit" {
-  title       = "Route53 resolver endpoints should not exceed tag limit"
-  description = "Check if the number of tags on Route53 resolver endpoints do not exceed the limit."
+  title       = "Route 53 Resolver endpoints should not exceed tag limit"
+  description = "Check if the number of tags on Route 53 Resolver endpoints do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
   param "tag_limit" {
     default = var.tag_limit
@@ -649,8 +649,8 @@ control "route53_resolver_endpoint_tag_limit" {
 }
 
 control "route53_resolver_rule_tag_limit" {
-  title       = "Route53 resolver rules should not exceed tag limit"
-  description = "Check if the number of tags on Route53 resolver rules do not exceed the limit."
+  title       = "Route 53 Resolver rules should not exceed tag limit"
+  description = "Check if the number of tags on Route 53 Resolver rules do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "tag_limit" {
     default = var.tag_limit

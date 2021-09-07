@@ -113,8 +113,8 @@ control "accessanalyzer_analyzer_untagged" {
 }
 
 control "api_gateway_stage_untagged" {
-  title       = "API gateway stages should be tagged"
-  description = "Check if API gateway stages have at least 1 tag."
+  title       = "API Gateway stages should be tagged"
+  description = "Check if API Gateway stages have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
 }
 
@@ -191,8 +191,8 @@ control "dax_cluster_untagged" {
 }
 
 control "directory_service_directory_untagged" {
-  title       = "Directory service directories should be tagged"
-  description = "Check if Directory service directories have at least 1 tag."
+  title       = "Directory Service directories should be tagged"
+  description = "Check if Directory Service directories have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_directory_service_directory")
 }
 
@@ -395,50 +395,50 @@ control "macie2_classification_job_untagged" {
 }
 
 control "rds_db_cluster_untagged" {
-  title       = "RDS db clusters should be tagged"
-  description = "Check if RDS db clusters have at least 1 tag."
+  title       = "RDS DB clusters should be tagged"
+  description = "Check if RDS DB clusters have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster")
 }
 
 control "rds_db_cluster_parameter_group_untagged" {
-  title       = "RDS db cluster parameter groups should be tagged"
-  description = "Check if RDS db cluster parameter groups have at least 1 tag."
+  title       = "RDS DB cluster parameter groups should be tagged"
+  description = "Check if RDS DB cluster parameter groups have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
 }
 
 control "rds_db_cluster_snapshot_untagged" {
-  title       = "RDS db cluster snapshots should be tagged"
-  description = "Check if RDS db cluster snapshots have at least 1 tag."
+  title       = "RDS DB cluster snapshots should be tagged"
+  description = "Check if RDS DB cluster snapshots have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
 }
 
 control "rds_db_instance_untagged" {
-  title       = "RDS db instances should be tagged"
-  description = "Check if RDS db instances have at least 1 tag."
+  title       = "RDS DB instances should be tagged"
+  description = "Check if RDS DB instances have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_instance")
 }
 
 control "rds_db_option_group_untagged" {
-  title       = "RDS db option groups should be tagged"
-  description = "Check if RDS db option groups have at least 1 tag."
+  title       = "RDS DB option groups should be tagged"
+  description = "Check if RDS DB option groups have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_option_group")
 }
 
 control "rds_db_parameter_group_untagged" {
-  title       = "RDS db parameter groups should be tagged"
-  description = "Check if RDS db parameter groups have at least 1 tag."
+  title       = "RDS DB parameter groups should be tagged"
+  description = "Check if RDS DB parameter groups have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_parameter_group")
 }
 
 control "rds_db_snapshot_untagged" {
-  title       = "RDS db snapshots should be tagged"
-  description = "Check if RDS db snapshots have at least 1 tag."
+  title       = "RDS DB snapshots should be tagged"
+  description = "Check if RDS DB snapshots have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_snapshot")
 }
 
 control "rds_db_subnet_group_untagged" {
-  title       = "RDS db subnet groups should be tagged"
-  description = "Check if RDS db subnet groups have at least 1 tag."
+  title       = "RDS DB subnet groups should be tagged"
+  description = "Check if RDS DB subnet groups have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_subnet_group")
 }
 
@@ -455,14 +455,14 @@ control "route53_domain_untagged" {
 }
 
 control "route53_resolver_endpoint_untagged" {
-  title       = "Route53 resolver endpoints should be tagged"
-  description = "Check if Route53 resolver endpoints have at least 1 tag."
+  title       = "Route 53 Resolver endpoints should be tagged"
+  description = "Check if Route 53 Resolver endpoints have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
 }
 
 control "route53_resolver_rule_untagged" {
-  title       = "Route53 resolver rules should be tagged"
-  description = "Check if Route53 resolver rules have at least 1 tag."
+  title       = "Route 53 Resolver rules should be tagged"
+  description = "Check if Route 53 Resolver rules have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
 }
 
