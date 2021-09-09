@@ -12,9 +12,6 @@ New control types:
 For 78 resource types:
 - accessanalyzer_analyzer
 - api_gateway_stage
-- auditmanager_assessment
-- auditmanager_control
-- auditmanager_framework
 - cloudfront_distribution
 - cloudtrail_trail
 - cloudwatch_alarm
@@ -36,7 +33,6 @@ For 78 resource types:
 - ec2_network_load_balancer
 - ec2_reserved_instance
 - ecr_repository
-- ecrpublic_repository
 - ecs_container_instance
 - ecs_service
 - efs_file_system
@@ -49,7 +45,6 @@ For 78 resource types:
 - elasticsearch_domain
 - eventbridge_rule
 - guardduty_detector
-- iam_policy
 - iam_role
 - iam_server_certificate
 - iam_user
@@ -57,7 +52,6 @@ For 78 resource types:
 - kinesis_firehose_delivery_stream
 - kms_key
 - lambda_function
-- macie2_classification_job
 - rds_db_cluster
 - rds_db_cluster_parameter_group
 - rds_db_cluster_snapshot
@@ -69,7 +63,6 @@ For 78 resource types:
 - redshift_cluster
 - route53_domain
 - route53_resolver_endpoint
-- route53_resolver_rule
 - s3_bucket
 - sagemaker_endpoint_configuration
 - sagemaker_model
