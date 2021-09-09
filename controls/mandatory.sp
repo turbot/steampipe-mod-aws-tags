@@ -42,9 +42,6 @@ benchmark "mandatory" {
   children = [
     control.accessanalyzer_analyzer_mandatory,
     control.api_gateway_stage_mandatory,
-    control.auditmanager_assessment_mandatory,
-    control.auditmanager_control_mandatory,
-    control.auditmanager_framework_mandatory,
     control.cloudfront_distribution_mandatory,
     control.cloudtrail_trail_mandatory,
     control.cloudwatch_alarm_mandatory,
@@ -66,7 +63,6 @@ benchmark "mandatory" {
     control.ec2_network_load_balancer_mandatory,
     control.ec2_reserved_instance_mandatory,
     control.ecr_repository_mandatory,
-    control.ecrpublic_repository_mandatory,
     control.ecs_container_instance_mandatory,
     control.ecs_service_mandatory,
     control.efs_file_system_mandatory,
@@ -79,7 +75,6 @@ benchmark "mandatory" {
     control.elasticsearch_domain_mandatory,
     control.eventbridge_rule_mandatory,
     control.guardduty_detector_mandatory,
-    control.iam_policy_mandatory,
     control.iam_role_mandatory,
     control.iam_server_certificate_mandatory,
     control.iam_user_mandatory,
@@ -87,7 +82,6 @@ benchmark "mandatory" {
     control.kinesis_firehose_delivery_stream_mandatory,
     control.kms_key_mandatory,
     control.lambda_function_mandatory,
-    control.macie2_classification_job_mandatory,
     control.rds_db_cluster_mandatory,
     control.rds_db_cluster_parameter_group_mandatory,
     control.rds_db_cluster_snapshot_mandatory,
@@ -99,7 +93,6 @@ benchmark "mandatory" {
     control.redshift_cluster_mandatory,
     control.route53_domain_mandatory,
     control.route53_resolver_endpoint_mandatory,
-    control.route53_resolver_rule_mandatory,
     control.s3_bucket_mandatory,
     control.sagemaker_endpoint_configuration_mandatory,
     control.sagemaker_model_mandatory,
@@ -134,33 +127,6 @@ control "api_gateway_stage_mandatory" {
   title       = "API Gateway stages should have mandatory tags"
   description = "Check if API Gateway stages have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "auditmanager_assessment_mandatory" {
-  title       = "Audit Manager assessments should have mandatory tags"
-  description = "Check if Audit Manager assessments have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_auditmanager_assessment")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "auditmanager_control_mandatory" {
-  title       = "Audit Manager controls should have mandatory tags"
-  description = "Check if Audit Manager controls have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_auditmanager_control")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "auditmanager_framework_mandatory" {
-  title       = "Audit Manager frameworks should have mandatory tags"
-  description = "Check if Audit Manager frameworks have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_auditmanager_framework")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
@@ -355,15 +321,6 @@ control "ecr_repository_mandatory" {
   }
 }
 
-control "ecrpublic_repository_mandatory" {
-  title       = "ECR public repositories should have mandatory tags"
-  description = "Check if ECR public repositories have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_ecrpublic_repository")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
 control "ecs_container_instance_mandatory" {
   title       = "ECS container instances should have mandatory tags"
   description = "Check if ECS container instances have mandatory tags."
@@ -472,15 +429,6 @@ control "guardduty_detector_mandatory" {
   }
 }
 
-control "iam_policy_mandatory" {
-  title       = "IAM policies should have mandatory tags"
-  description = "Check if IAM policies have mandatory tags."
-  sql         = replace(local.mandatory_sql_account, "__TABLE_NAME__", "aws_iam_policy")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
 control "iam_role_mandatory" {
   title       = "IAM roles should have mandatory tags"
   description = "Check if IAM roles have mandatory tags."
@@ -539,15 +487,6 @@ control "lambda_function_mandatory" {
   title       = "Lambda functions should have mandatory tags"
   description = "Check if Lambda functions have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_lambda_function")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "macie2_classification_job_mandatory" {
-  title       = "Macie2 classification jobs should have mandatory tags"
-  description = "Check if Macie2 classification jobs have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_macie2_classification_job")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
@@ -647,15 +586,6 @@ control "route53_resolver_endpoint_mandatory" {
   title       = "Route 53 Resolver endpoints should have mandatory tags"
   description = "Check if Route 53 Resolver endpoints have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "route53_resolver_rule_mandatory" {
-  title       = "Route 53 Resolver rules should have mandatory tags"
-  description = "Check if Route 53 Resolver rules have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }

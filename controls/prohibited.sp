@@ -47,9 +47,6 @@ benchmark "prohibited" {
   children = [
     control.accessanalyzer_analyzer_prohibited,
     control.api_gateway_stage_prohibited,
-    control.auditmanager_assessment_prohibited,
-    control.auditmanager_control_prohibited,
-    control.auditmanager_framework_prohibited,
     control.cloudfront_distribution_prohibited,
     control.cloudtrail_trail_prohibited,
     control.cloudwatch_alarm_prohibited,
@@ -71,7 +68,6 @@ benchmark "prohibited" {
     control.ec2_network_load_balancer_prohibited,
     control.ec2_reserved_instance_prohibited,
     control.ecr_repository_prohibited,
-    control.ecrpublic_repository_prohibited,
     control.ecs_container_instance_prohibited,
     control.ecs_service_prohibited,
     control.efs_file_system_prohibited,
@@ -84,7 +80,6 @@ benchmark "prohibited" {
     control.elasticsearch_domain_prohibited,
     control.eventbridge_rule_prohibited,
     control.guardduty_detector_prohibited,
-    control.iam_policy_prohibited,
     control.iam_role_prohibited,
     control.iam_server_certificate_prohibited,
     control.iam_user_prohibited,
@@ -92,7 +87,6 @@ benchmark "prohibited" {
     control.kinesis_firehose_delivery_stream_prohibited,
     control.kms_key_prohibited,
     control.lambda_function_prohibited,
-    control.macie2_classification_job_prohibited,
     control.rds_db_cluster_parameter_group_prohibited,
     control.rds_db_cluster_prohibited,
     control.rds_db_cluster_snapshot_prohibited,
@@ -104,7 +98,6 @@ benchmark "prohibited" {
     control.redshift_cluster_prohibited,
     control.route53_domain_prohibited,
     control.route53_resolver_endpoint_prohibited,
-    control.route53_resolver_rule_prohibited,
     control.s3_bucket_prohibited,
     control.sagemaker_endpoint_configuration_prohibited,
     control.sagemaker_model_prohibited,
@@ -139,33 +132,6 @@ control "api_gateway_stage_prohibited" {
   title       = "API Gateway stages should not have prohibited tags"
   description = "Check if API Gateway stages have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "auditmanager_assessment_prohibited" {
-  title       = "Audit Manager assessments should not have prohibited tags"
-  description = "Check if Audit Manager assessments have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_auditmanager_assessment")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "auditmanager_control_prohibited" {
-  title       = "Audit Manager controls should not have prohibited tags"
-  description = "Check if Audit Manager controls have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_auditmanager_control")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "auditmanager_framework_prohibited" {
-  title       = "Audit Manager frameworks should not have prohibited tags"
-  description = "Check if Audit Manager frameworks have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_auditmanager_framework")
   param "prohibited_tags" {
     default = var.prohibited_tags
   }
@@ -360,15 +326,6 @@ control "ecr_repository_prohibited" {
   }
 }
 
-control "ecrpublic_repository_prohibited" {
-  title       = "ECR public repositories should not have prohibited tags"
-  description = "Check if ECR public repositories have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_ecrpublic_repository")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
 control "ecs_container_instance_prohibited" {
   title       = "ECS container instances should not have prohibited tags"
   description = "Check if ECS container instances have any prohibited tags."
@@ -477,15 +434,6 @@ control "guardduty_detector_prohibited" {
   }
 }
 
-control "iam_policy_prohibited" {
-  title       = "IAM policies should not have prohibited tags"
-  description = "Check if IAM policies have any prohibited tags."
-  sql         = replace(local.prohibited_sql_account, "__TABLE_NAME__", "aws_iam_policy")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
 control "iam_role_prohibited" {
   title       = "IAM roles should not have prohibited tags"
   description = "Check if IAM roles have any prohibited tags."
@@ -544,15 +492,6 @@ control "lambda_function_prohibited" {
   title       = "Lambda functions should not have prohibited tags"
   description = "Check if Lambda functions have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_lambda_function")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "macie2_classification_job_prohibited" {
-  title       = "Macie2 classification jobs should not have prohibited tags"
-  description = "Check if Macie2 classification jobs have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_macie2_classification_job")
   param "prohibited_tags" {
     default = var.prohibited_tags
   }
@@ -652,15 +591,6 @@ control "route53_resolver_endpoint_prohibited" {
   title       = "Route 53 Resolver endpoints should not have prohibited tags"
   description = "Check if Route 53 Resolver endpoints have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "route53_resolver_rule_prohibited" {
-  title       = "Route 53 Resolver rules should not have prohibited tags"
-  description = "Check if Route 53 Resolver rules have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "prohibited_tags" {
     default = var.prohibited_tags
   }

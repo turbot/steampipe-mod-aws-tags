@@ -27,9 +27,6 @@ benchmark "untagged" {
   children = [
     control.accessanalyzer_analyzer_untagged,
     control.api_gateway_stage_untagged,
-    control.auditmanager_assessment_untagged,
-    control.auditmanager_control_untagged,
-    control.auditmanager_framework_untagged,
     control.cloudfront_distribution_untagged,
     control.cloudtrail_trail_untagged,
     control.cloudwatch_alarm_untagged,
@@ -51,7 +48,6 @@ benchmark "untagged" {
     control.ec2_network_load_balancer_untagged,
     control.ec2_reserved_instance_untagged,
     control.ecr_repository_untagged,
-    control.ecrpublic_repository_untagged,
     control.ecs_container_instance_untagged,
     control.ecs_service_untagged,
     control.efs_file_system_untagged,
@@ -64,7 +60,6 @@ benchmark "untagged" {
     control.elasticsearch_domain_untagged,
     control.eventbridge_rule_untagged,
     control.guardduty_detector_untagged,
-    control.iam_policy_untagged,
     control.iam_role_untagged,
     control.iam_server_certificate_untagged,
     control.iam_user_untagged,
@@ -72,7 +67,6 @@ benchmark "untagged" {
     control.kinesis_firehose_delivery_stream_untagged,
     control.kms_key_untagged,
     control.lambda_function_untagged,
-    control.macie2_classification_job_untagged,
     control.rds_db_cluster_untagged,
     control.rds_db_cluster_parameter_group_untagged,
     control.rds_db_cluster_snapshot_untagged,
@@ -84,7 +78,6 @@ benchmark "untagged" {
     control.redshift_cluster_untagged,
     control.route53_domain_untagged,
     control.route53_resolver_endpoint_untagged,
-    control.route53_resolver_rule_untagged,
     control.s3_bucket_untagged,
     control.sagemaker_endpoint_configuration_untagged,
     control.sagemaker_model_untagged,
@@ -116,24 +109,6 @@ control "api_gateway_stage_untagged" {
   title       = "API Gateway stages should be tagged"
   description = "Check if API Gateway stages have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
-}
-
-control "auditmanager_assessment_untagged" {
-  title       = "Audit Manager assessments should be tagged"
-  description = "Check if Audit Manager assessments have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_auditmanager_assessment")
-}
-
-control "auditmanager_control_untagged" {
-  title       = "Audit Manager controls should be tagged"
-  description = "Check if Audit Manager controls have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_auditmanager_control")
-}
-
-control "auditmanager_framework_untagged" {
-  title       = "Audit Manager frameworks should be tagged"
-  description = "Check if Audit Manager frameworks have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_auditmanager_framework")
 }
 
 control "cloudfront_distribution_untagged" {
@@ -262,12 +237,6 @@ control "ecr_repository_untagged" {
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ecr_repository")
 }
 
-control "ecrpublic_repository_untagged" {
-  title       = "ECR public repositories should be tagged"
-  description = "Check if ECR public repositories have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ecrpublic_repository")
-}
-
 control "ecs_container_instance_untagged" {
   title       = "ECS container instances should be tagged"
   description = "Check if ECS container instances have at least 1 tag."
@@ -340,12 +309,6 @@ control "guardduty_detector_untagged" {
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_guardduty_detector")
 }
 
-control "iam_policy_untagged" {
-  title       = "IAM policies should be tagged"
-  description = "Check if IAM policies have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_iam_policy")
-}
-
 control "iam_role_untagged" {
   title       = "IAM roles should be tagged"
   description = "Check if IAM roles have at least 1 tag."
@@ -386,12 +349,6 @@ control "lambda_function_untagged" {
   title       = "Lambda functions should be tagged"
   description = "Check if Lambda functions have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_lambda_function")
-}
-
-control "macie2_classification_job_untagged" {
-  title       = "Macie2 classification jobs should be tagged"
-  description = "Check if Macie2 classification jobs have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_macie2_classification_job")
 }
 
 control "rds_db_cluster_untagged" {
@@ -458,12 +415,6 @@ control "route53_resolver_endpoint_untagged" {
   title       = "Route 53 Resolver endpoints should be tagged"
   description = "Check if Route 53 Resolver endpoints have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
-}
-
-control "route53_resolver_rule_untagged" {
-  title       = "Route 53 Resolver rules should be tagged"
-  description = "Check if Route 53 Resolver rules have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
 }
 
 control "s3_bucket_untagged" {

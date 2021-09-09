@@ -38,9 +38,6 @@ benchmark "limit" {
   children = [
     control.accessanalyzer_analyzer_tag_limit,
     control.api_gateway_stage_tag_limit,
-    control.auditmanager_assessment_tag_limit,
-    control.auditmanager_control_tag_limit,
-    control.auditmanager_framework_tag_limit,
     control.cloudfront_distribution_tag_limit,
     control.cloudtrail_trail_tag_limit,
     control.cloudwatch_alarm_tag_limit,
@@ -62,7 +59,6 @@ benchmark "limit" {
     control.ec2_network_load_balancer_tag_limit,
     control.ec2_reserved_instance_tag_limit,
     control.ecr_repository_tag_limit,
-    control.ecrpublic_repository_tag_limit,
     control.ecs_container_instance_tag_limit,
     control.ecs_service_tag_limit,
     control.efs_file_system_tag_limit,
@@ -75,7 +71,6 @@ benchmark "limit" {
     control.elasticsearch_domain_tag_limit,
     control.eventbridge_rule_tag_limit,
     control.guardduty_detector_tag_limit,
-    control.iam_policy_tag_limit,
     control.iam_role_tag_limit,
     control.iam_server_certificate_tag_limit,
     control.iam_user_tag_limit,
@@ -83,7 +78,6 @@ benchmark "limit" {
     control.kinesis_firehose_delivery_stream_tag_limit,
     control.kms_key_tag_limit,
     control.lambda_function_tag_limit,
-    control.macie2_classification_job_tag_limit,
     control.rds_db_cluster_parameter_group_tag_limit,
     control.rds_db_cluster_snapshot_tag_limit,
     control.rds_db_cluster_tag_limit,
@@ -95,7 +89,6 @@ benchmark "limit" {
     control.redshift_cluster_tag_limit,
     control.route53_domain_tag_limit,
     control.route53_resolver_endpoint_tag_limit,
-    control.route53_resolver_rule_tag_limit,
     control.s3_bucket_tag_limit,
     control.sagemaker_endpoint_configuration_tag_limit,
     control.sagemaker_model_tag_limit,
@@ -130,33 +123,6 @@ control "api_gateway_stage_tag_limit" {
   title       = "API Gateway stages should not exceed tag limit"
   description = "Check if the number of tags on API Gateway stages do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "auditmanager_assessment_tag_limit" {
-  title       = "Audit Manager assessments should not exceed tag limit"
-  description = "Check if the number of tags on Audit Manager assessments do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_auditmanager_assessment")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "auditmanager_control_tag_limit" {
-  title       = "Audit Manager controls should not exceed tag limit"
-  description = "Check if the number of tags on Audit Manager controls do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_auditmanager_control")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "auditmanager_framework_tag_limit" {
-  title       = "Audit Manager frameworks should not exceed tag limit"
-  description = "Check if the number of tags on Audit Manager frameworks do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_auditmanager_framework")
   param "tag_limit" {
     default = var.tag_limit
   }
@@ -351,15 +317,6 @@ control "ecr_repository_tag_limit" {
   }
 }
 
-control "ecrpublic_repository_tag_limit" {
-  title       = "ECR public repositories should not exceed tag limit"
-  description = "Check if the number of tags on ECR public repositories do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_ecrpublic_repository")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
 control "ecs_container_instance_tag_limit" {
   title       = "ECS container instances should not exceed tag limit"
   description = "Check if the number of tags on ECS container instances do not exceed the limit."
@@ -468,15 +425,6 @@ control "guardduty_detector_tag_limit" {
   }
 }
 
-control "iam_policy_tag_limit" {
-  title       = "IAM policies should not exceed tag limit"
-  description = "Check if the number of tags on IAM policies do not exceed the limit."
-  sql         = replace(local.limit_sql_account, "__TABLE_NAME__", "aws_iam_policy")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
 control "iam_role_tag_limit" {
   title       = "IAM roles should not exceed tag limit"
   description = "Check if the number of tags on IAM roles do not exceed the limit."
@@ -535,15 +483,6 @@ control "lambda_function_tag_limit" {
   title       = "Lambda functions should not exceed tag limit"
   description = "Check if the number of tags on Lambda functions do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_lambda_function")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "macie2_classification_job_tag_limit" {
-  title       = "Macie2 classification jobs should not exceed tag limit"
-  description = "Check if the number of tags on Macie2 classification jobs do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_macie2_classification_job")
   param "tag_limit" {
     default = var.tag_limit
   }
@@ -643,15 +582,6 @@ control "route53_resolver_endpoint_tag_limit" {
   title       = "Route 53 Resolver endpoints should not exceed tag limit"
   description = "Check if the number of tags on Route 53 Resolver endpoints do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "route53_resolver_rule_tag_limit" {
-  title       = "Route 53 Resolver rules should not exceed tag limit"
-  description = "Check if the number of tags on Route 53 Resolver rules do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_route53_resolver_rule")
   param "tag_limit" {
     default = var.tag_limit
   }
