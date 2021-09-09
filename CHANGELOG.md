@@ -9,7 +9,7 @@ New control types:
 - Mandatory: Ensure mandatory tags are set.
 - Limit: Detect when the tag limit is nearly met.
 
-For 78 resource types:
+For 71 resource types:
 - accessanalyzer_analyzer
 - api_gateway_stage
 - cloudfront_distribution
