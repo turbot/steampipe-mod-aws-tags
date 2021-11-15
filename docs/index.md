@@ -6,6 +6,8 @@ repository: "https://github.com/turbot/steampipe-mod-aws-tags"
 
 Run tagging controls across all your AWS accounts to look for untagged resources, missing tags, resources with too many tags, and more.
 
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png)
+
 ## References
 
 [AWS](https://aws.amazon.com/) provides on-demand cloud computing platforms and APIs to authenticated customers on a metered pay-as-you-go basis.
