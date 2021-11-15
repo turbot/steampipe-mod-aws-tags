@@ -1,3 +1,8 @@
+## v0.2 [2021-11-15]
+
+_Enhancements_
+
+- `README.md` and `docs/index.md` files now include the console output image
 
 ## v0.1 [2021-09-09]
 
