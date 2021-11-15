@@ -2,6 +2,8 @@
 
 An AWS tags checking tool that can be used to look for untagged resources, missing tags, resources with too many tags, and more.
 
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png)
+
 ## Getting started
 
 ### Installation
