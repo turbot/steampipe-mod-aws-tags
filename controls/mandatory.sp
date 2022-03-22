@@ -1,6 +1,7 @@
 variable "mandatory_tags" {
   type        = list(string)
   description = "A list of mandatory tags to check for."
+  default     = ["Environment", "Owner"]
 }
 
 locals {
