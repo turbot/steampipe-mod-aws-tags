@@ -1,6 +1,7 @@
 variable "prohibited_tags" {
   type        = list(string)
   description = "A list of prohibited tags to check for."
+  default     = ["Password", "Key"]
 }
 
 locals {

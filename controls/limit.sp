@@ -1,6 +1,7 @@
 variable "tag_limit" {
   type        = number
   description = "Number of tags allowed on a resource. AWS allows up to 50 tags per resource."
+  default     = 45
 }
 
 locals {
