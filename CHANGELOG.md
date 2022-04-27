@@ -1,3 +1,9 @@
+## v0.4 [2022-04-27]
+
+_Enhancements_
+
+- Added `category`, `service`, and `type` tags to benchmarks. ([#13](https://github.com/turbot/steampipe-mod-aws-tags/pull/13))
+
 ## v0.3 [2022-03-23]
 
 _What's new?_
