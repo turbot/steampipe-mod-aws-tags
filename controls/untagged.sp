@@ -97,6 +97,10 @@ benchmark "untagged" {
     control.wafv2_rule_group_untagged,
     control.wafv2_web_acl_untagged
   ]
+
+  tags = merge(local.aws_tags_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "accessanalyzer_analyzer_untagged" {
