@@ -109,6 +109,10 @@ benchmark "limit" {
     control.wafv2_rule_group_tag_limit,
     control.wafv2_web_acl_tag_limit,
   ]
+
+  tags = merge(local.aws_tags_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "accessanalyzer_analyzer_tag_limit" {
