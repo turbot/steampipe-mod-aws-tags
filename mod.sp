@@ -1,3 +1,12 @@
+// Benchmarks and controls for specific services should override the "service" tag
+locals {
+  aws_tags_common_tags = {
+    category = "Tagging"
+    plugin   = "aws"
+    service  = "AWS"
+  }
+}
+
 mod "aws_tags" {
   # hub metadata
   title         = "AWS Tags"

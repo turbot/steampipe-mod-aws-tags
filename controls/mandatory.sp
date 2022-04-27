@@ -113,6 +113,10 @@ benchmark "mandatory" {
     control.wafv2_rule_group_mandatory,
     control.wafv2_web_acl_mandatory
   ]
+
+  tags = merge(local.aws_tags_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "accessanalyzer_analyzer_mandatory" {
