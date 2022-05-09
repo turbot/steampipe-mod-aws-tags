@@ -4,7 +4,7 @@ An AWS tags checking tool that can be used to look for untagged resources, missi
 
 Run checks in a dashboard:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/add-benchmark-screenshots/docs/aws_tags_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_dashboard.png)
 
 Or in a terminal:
 
