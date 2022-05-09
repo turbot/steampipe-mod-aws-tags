@@ -6,7 +6,9 @@ repository: "https://github.com/turbot/steampipe-mod-aws-tags"
 
 Run tagging controls across all your AWS accounts to look for untagged resources, missing tags, resources with too many tags, and more.
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png)
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_untagged_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png" width="50%" type="thumbnail"/>
 
 ## References
 
@@ -24,12 +26,21 @@ Run tagging controls across all your AWS accounts to look for untagged resources
 
 ### Installation
 
-1) Install the AWS plugin:
-```shell
+Download and install Steampipe (https://steampipe.io/downloads). Or use Brew:
+
+```sh
+brew tap turbot/tap
+brew install steampipe
+```
+
+Install the AWS plugin with [Steampipe](https://steampipe.io):
+
+```sh
 steampipe plugin install aws
 ```
 
-2) Clone this repo:
+Clone:
+
 ```sh
 git clone https://github.com/turbot/steampipe-mod-aws-tags.git
 cd steampipe-mod-aws-tags
@@ -37,39 +48,39 @@ cd steampipe-mod-aws-tags
 
 ### Usage
 
-#### Running benchmarks
+Start your dashboard server to get started:
 
-Preview running all benchmarks:
-```shell
-steampipe check all --dry-run
+```sh
+steampipe dashboard
 ```
 
+By default, the dashboard interface will then be launched in a new browser
+window at https://localhost:9194. From here, you can run benchmarks by
+selecting one or searching for a specific one.
+
+Instead of running benchmarks in a dashboard, you can also run them within your
+terminal with the `steampipe check` command:
+
 Run all benchmarks:
-```shell
+
+```sh
 steampipe check all
 ```
 
-Use Steampipe introspection to view all current benchmarks:
-```shell
-steampipe query "select resource_name, title, description from steampipe_benchmark;"
-```
+Run a single benchmark:
 
-Run an individual benchmark:
-```shell
+```sh
 steampipe check benchmark.untagged
 ```
 
-#### Running controls
-
-Use Steampipe introspection to view all current controls:
-```shell
-steampipe query "select resource_name, title, description from steampipe_control;"
-```
-
 Run a specific control:
-```shell
+
+```sh
 steampipe check control.s3_bucket_untagged
 ```
+
+Different output formats are also available, for more information please see
+[Output Formats](https://steampipe.io/docs/reference/cli/check#output-formats).
 
 ### Credentials
 
@@ -81,11 +92,11 @@ Several benchmarks have [input variables](https://steampipe.io/docs/using-steamp
 
 - Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
 - Pass in a value on the command line:
-  ```shell
+  ```sh
   steampipe check benchmark.mandatory --var 'mandatory_tags=["Application", "Environment", "Department", "Owner"]'
   ```
 - Set an environment variable:
-  ```shell
+  ```sh
   SP_VAR_mandatory_tags='["Application", "Environment", "Department", "Owner"]' steampipe check control.ec2_instance_mandatory
   ```
   - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
@@ -135,8 +146,15 @@ done <<< "$INPUT"
 IFS=$OLDIFS
 ```
 
-## Get involved
+## Contributing
 
-* Contribute: [GitHub Repo](https://github.com/turbot/steampipe-mod-aws-tags)
+If you have an idea for additional controls or just want to help maintain and extend this mod ([or others](https://github.com/topics/steampipe-mod)) we would love you to join the community and start contributing.
 
-* Community: [Slack Channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g)
+- **[Join our Slack community →](https://steampipe.io/community/join)** and hang out with other Mod developers.
+
+Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-mod-aws-tags/blob/main/LICENSE).
+
+Want to help but not sure where to start? Pick up one of the `help wanted` issues:
+
+- [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)
+- [AWS Tags Mod](https://github.com/turbot/steampipe-mod-aws-tags/labels/help%20wanted)

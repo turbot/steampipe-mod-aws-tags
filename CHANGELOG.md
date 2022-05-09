@@ -1,3 +1,9 @@
+## v0.5 [2022-05-09]
+
+_Enhancements_
+
+- Updated docs/index.md and README with new dashboard screenshots and latest format. ([#16](https://github.com/turbot/steampipe-mod-aws-tags/pull/16))
+
 ## v0.4 [2022-04-27]
 
 _Enhancements_
