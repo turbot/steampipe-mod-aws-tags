@@ -1,4 +1,4 @@
-# AWS Tags Tool
+# AWS Tags Mod for Steampipe
 
 An AWS tags checking tool that can be used to look for untagged resources, missing tags, resources with too many tags, and more.
 
