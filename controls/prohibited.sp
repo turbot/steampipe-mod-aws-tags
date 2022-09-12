@@ -106,7 +106,6 @@ benchmark "prohibited" {
     control.sagemaker_training_job_prohibited,
     control.secretsmanager_secret_prohibited,
     control.ssm_parameter_prohibited,
-    control.tagging_resource_prohibited,
     control.vpc_eip_prohibited,
     control.vpc_nat_gateway_prohibited,
     control.vpc_network_acl_prohibited,
@@ -659,15 +658,6 @@ control "ssm_parameter_prohibited" {
   title       = "SSM parameters should not have prohibited tags"
   description = "Check if SSM parameters have any prohibited tags."
   sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_ssm_parameter")
-  param "prohibited_tags" {
-    default = var.prohibited_tags
-  }
-}
-
-control "tagging_resource_prohibited" {
-  title       = "Tagging resources should not have prohibited tags"
-  description = "Check if Tagging resources have any prohibited tags."
-  sql         = replace(local.prohibited_sql_region, "__TABLE_NAME__", "aws_tagging_resource")
   param "prohibited_tags" {
     default = var.prohibited_tags
   }

@@ -1,3 +1,13 @@
+## v0.6 [2022-09-12]
+
+_Breaking changes_
+
+- Removed the following controls as they're redundant with all other controls:
+  - `tagging_resource_mandatory`
+  - `tagging_resource_prohibited`
+  - `tagging_resource_tag_limit`
+  - `tagging_resource_untagged`
+
 ## v0.5 [2022-05-09]
 
 _Enhancements_

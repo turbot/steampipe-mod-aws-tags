@@ -101,7 +101,6 @@ benchmark "mandatory" {
     control.sagemaker_training_job_mandatory,
     control.secretsmanager_secret_mandatory,
     control.ssm_parameter_mandatory,
-    control.tagging_resource_mandatory,
     control.vpc_mandatory,
     control.vpc_eip_mandatory,
     control.vpc_nat_gateway_mandatory,
@@ -654,15 +653,6 @@ control "ssm_parameter_mandatory" {
   title       = "SSM parameters should have mandatory tags"
   description = "Check if SSM parameters have mandatory tags."
   sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_ssm_parameter")
-  param "mandatory_tags" {
-    default = var.mandatory_tags
-  }
-}
-
-control "tagging_resource_mandatory" {
-  title       = "Tagging resources should have mandatory tags"
-  description = "Check if Tagging resources have mandatory tags."
-  sql         = replace(local.mandatory_sql_region, "__TABLE_NAME__", "aws_tagging_resource")
   param "mandatory_tags" {
     default = var.mandatory_tags
   }
