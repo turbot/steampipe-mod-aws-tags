@@ -97,7 +97,6 @@ benchmark "limit" {
     control.sagemaker_training_job_tag_limit,
     control.secretsmanager_secret_tag_limit,
     control.ssm_parameter_tag_limit,
-    control.tagging_resource_tag_limit,
     control.vpc_eip_tag_limit,
     control.vpc_nat_gateway_tag_limit,
     control.vpc_network_acl_tag_limit,
@@ -650,15 +649,6 @@ control "ssm_parameter_tag_limit" {
   title       = "SSM parameters should not exceed tag limit"
   description = "Check if the number of tags on Ssm parameters do not exceed the limit."
   sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_ssm_parameter")
-  param "tag_limit" {
-    default = var.tag_limit
-  }
-}
-
-control "tagging_resource_tag_limit" {
-  title       = "Tagging resources should not exceed tag limit"
-  description = "Check if the number of tags on Tagging resources do not exceed the limit."
-  sql         = replace(local.limit_sql_region, "__TABLE_NAME__", "aws_tagging_resource")
   param "tag_limit" {
     default = var.tag_limit
   }

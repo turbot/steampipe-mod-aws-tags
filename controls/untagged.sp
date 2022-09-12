@@ -85,7 +85,6 @@ benchmark "untagged" {
     control.sagemaker_training_job_untagged,
     control.secretsmanager_secret_untagged,
     control.ssm_parameter_untagged,
-    control.tagging_resource_untagged,
     control.vpc_untagged,
     control.vpc_eip_untagged,
     control.vpc_nat_gateway_untagged,
@@ -461,12 +460,6 @@ control "ssm_parameter_untagged" {
   title       = "SSM parameters should be tagged"
   description = "Check if SSM parameters have at least 1 tag."
   sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ssm_parameter")
-}
-
-control "tagging_resource_untagged" {
-  title       = "Tagging resources should be tagged"
-  description = "Check if Tagging resources have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_tagging_resource")
 }
 
 control "vpc_untagged" {
