@@ -3,12 +3,12 @@ locals {
     select
       arn as resource,
       case
-        when tags is not null then 'ok'
-        else 'alarm'
+        when tags = '{}' or tags is null then 'alarm'
+        else 'ok'
       end as status,
       case
-        when tags is not null then title || ' has tags.'
-        else title || ' has no tags.'
+        when tags = '{}' or tags is null then title || ' has no tags.'
+        else title || ' has tags.'
       end as reason,
       __DIMENSIONS__
     from
