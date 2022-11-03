@@ -1,3 +1,9 @@
+## v0.7 [2022-11-03]
+
+_Enhancements_
+
+- Updated the queries of `Untagged` benchmark (`steampipe check benchmark.untagged`) controls to also check if the value of the `tags` column is `{}` besides checking for `null`. ([#20](https://github.com/turbot/steampipe-mod-aws-tags/pull/20))
+
 ## v0.6 [2022-09-12]
 
 _Breaking changes_
