@@ -17,8 +17,8 @@ locals {
 }
 
 locals {
-  untagged_sql_account = replace(local.untagged_sql, "__DIMENSIONS__", "account_id")
-  untagged_sql_region  = replace(local.untagged_sql, "__DIMENSIONS__", "region, account_id")
+  untagged_sql_account = replace(local.untagged_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', account_id")
+  untagged_sql_region  = replace(local.untagged_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', region, account_id")
 }
 
 benchmark "untagged" {

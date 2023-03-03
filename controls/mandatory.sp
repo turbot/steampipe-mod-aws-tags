@@ -33,8 +33,8 @@ locals {
 }
 
 locals {
-  mandatory_sql_account = replace(local.mandatory_sql, "__DIMENSIONS__", "account_id")
-  mandatory_sql_region  = replace(local.mandatory_sql, "__DIMENSIONS__", "region, account_id")
+  mandatory_sql_account = replace(local.mandatory_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', account_id")
+  mandatory_sql_region  = replace(local.mandatory_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', region, account_id")
 }
 
 benchmark "mandatory" {

@@ -29,8 +29,8 @@ locals {
 }
 
 locals {
-  limit_sql_account = replace(local.limit_sql, "__DIMENSIONS__", "account_id")
-  limit_sql_region  = replace(local.limit_sql, "__DIMENSIONS__", "region, account_id")
+  limit_sql_account = replace(local.limit_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', account_id")
+  limit_sql_region  = replace(local.limit_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', region, account_id")
 }
 
 benchmark "limit" {
