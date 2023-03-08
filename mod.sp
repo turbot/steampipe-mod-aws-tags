@@ -30,7 +30,7 @@ variable "common_dimensions" {
   # - account_id
   # - connection_name (_ctx ->> 'connection_name')
   # - region
-  default     = [ "account_id", "region" ]
+  default     = [ "account_id", "region", "connection_name" ]
 }
 
 locals {
