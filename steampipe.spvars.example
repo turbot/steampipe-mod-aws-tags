@@ -4,3 +4,4 @@ tag_dimensions    = []
 mandatory_tags = ["Environment", "Owner"]
 prohibited_tags = ["Password", "Key"]
 tag_limit = 45
+expected_tag_values = {"Environment": ["Prod", "Staging", "Dev"]}
