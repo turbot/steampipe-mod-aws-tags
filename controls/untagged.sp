@@ -9,16 +9,12 @@ locals {
       case
         when tags = '{}' or tags is null then title || ' has no tags.'
         else title || ' has tags.'
-      end as reason,
-      __DIMENSIONS__
+      end as reason
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_sql}
     from
       __TABLE_NAME__
   EOT
-}
-
-locals {
-  untagged_sql_account = replace(local.untagged_sql, "__DIMENSIONS__", "account_id")
-  untagged_sql_region  = replace(local.untagged_sql, "__DIMENSIONS__", "region, account_id")
 }
 
 benchmark "untagged" {
@@ -105,419 +101,419 @@ benchmark "untagged" {
 control "accessanalyzer_analyzer_untagged" {
   title       = "Access Analyzer analyzers should be tagged"
   description = "Check if Access Analyzer analyzers have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_accessanalyzer_analyzer")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_accessanalyzer_analyzer")
 }
 
 control "api_gateway_stage_untagged" {
   title       = "API Gateway stages should be tagged"
   description = "Check if API Gateway stages have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_api_gateway_stage")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_api_gateway_stage")
 }
 
 control "cloudfront_distribution_untagged" {
   title       = "CloudFront distributions should be tagged"
   description = "Check if CloudFront distributions have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_cloudfront_distribution")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_cloudfront_distribution")
 }
 
 control "cloudtrail_trail_untagged" {
   title       = "CloudTrail trails should be tagged"
   description = "Check if CloudTrail trails have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_cloudtrail_trail")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_cloudtrail_trail")
 }
 
 control "cloudwatch_alarm_untagged" {
   title       = "CloudWatch alarms should be tagged"
   description = "Check if CloudWatch alarms have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_cloudwatch_alarm")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_cloudwatch_alarm")
 }
 
 control "cloudwatch_log_group_untagged" {
   title       = "CloudWatch log groups should be tagged"
   description = "Check if CloudWatch log groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_cloudwatch_log_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_cloudwatch_log_group")
 }
 
 control "codebuild_project_untagged" {
   title       = "CodeBuild projects should be tagged"
   description = "Check if CodeBuild projects have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_codebuild_project")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_codebuild_project")
 }
 
 control "codecommit_repository_untagged" {
   title       = "CodeCommit repositories should be tagged"
   description = "Check if CodeCommit repositories have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_codecommit_repository")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_codecommit_repository")
 }
 
 control "codepipeline_pipeline_untagged" {
   title       = "CodePipeline pipelines should be tagged"
   description = "Check if CodePipeline pipelines have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_codepipeline_pipeline")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_codepipeline_pipeline")
 }
 
 control "config_rule_untagged" {
   title       = "Config rules should be tagged"
   description = "Check if Config rules have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_config_rule")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_config_rule")
 }
 
 control "dax_cluster_untagged" {
   title       = "DAX clusters should be tagged"
   description = "Check if DAX clusters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_dax_cluster")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_dax_cluster")
 }
 
 control "directory_service_directory_untagged" {
   title       = "Directory Service directories should be tagged"
   description = "Check if Directory Service directories have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_directory_service_directory")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_directory_service_directory")
 }
 
 control "dms_replication_instance_untagged" {
   title       = "Dms replication instances should be tagged"
   description = "Check if Dms replication instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_dms_replication_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_dms_replication_instance")
 }
 
 control "dynamodb_table_untagged" {
   title       = "DynamoDB tables should be tagged"
   description = "Check if DynamoDB tables have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_dynamodb_table")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_dynamodb_table")
 }
 
 control "ebs_snapshot_untagged" {
   title       = "EBS snapshots should be tagged"
   description = "Check if EBS snapshots have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ebs_snapshot")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ebs_snapshot")
 }
 
 control "ebs_volume_untagged" {
   title       = "EBS volumes should be tagged"
   description = "Check if EBS volumes have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ebs_volume")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ebs_volume")
 }
 
 control "ec2_application_load_balancer_untagged" {
   title       = "EC2 application load balancers should be tagged"
   description = "Check if EC2 application load balancers have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_application_load_balancer")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_application_load_balancer")
 }
 
 control "ec2_classic_load_balancer_untagged" {
   title       = "EC2 classic load balancers should be tagged"
   description = "Check if EC2 classic load balancers have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_classic_load_balancer")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_classic_load_balancer")
 }
 
 control "ec2_gateway_load_balancer_untagged" {
   title       = "EC2 gateway load balancers should be tagged"
   description = "Check if EC2 gateway load balancers have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_gateway_load_balancer")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_gateway_load_balancer")
 }
 
 control "ec2_instance_untagged" {
   title       = "EC2 instances should be tagged"
   description = "Check if EC2 instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_instance")
 }
 
 control "ec2_network_load_balancer_untagged" {
   title       = "EC2 network load balancers should be tagged"
   description = "Check if EC2 network load balancers have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_network_load_balancer")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_network_load_balancer")
 }
 
 control "ec2_reserved_instance_untagged" {
   title       = "EC2 reserved instances should be tagged"
   description = "Check if EC2 reserved instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ec2_reserved_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ec2_reserved_instance")
 }
 
 control "ecr_repository_untagged" {
   title       = "ECR repositories should be tagged"
   description = "Check if ECR repositories have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ecr_repository")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ecr_repository")
 }
 
 control "ecs_container_instance_untagged" {
   title       = "ECS container instances should be tagged"
   description = "Check if ECS container instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ecs_container_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ecs_container_instance")
 }
 
 control "ecs_service_untagged" {
   title       = "ECS services should be tagged"
   description = "Check if ECS services have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ecs_service")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ecs_service")
 }
 
 control "efs_file_system_untagged" {
   title       = "EFS file systems should be tagged"
   description = "Check if EFS file systems have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_efs_file_system")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_efs_file_system")
 }
 
 control "eks_addon_untagged" {
   title       = "EKS addons should be tagged"
   description = "Check if EKS addons have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_eks_addon")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_eks_addon")
 }
 
 control "eks_cluster_untagged" {
   title       = "EKS clusters should be tagged"
   description = "Check if EKS clusters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_eks_cluster")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_eks_cluster")
 }
 
 control "eks_identity_provider_config_untagged" {
   title       = "EKS identity provider configs should be tagged"
   description = "Check if EKS identity provider configs have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_eks_identity_provider_config")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_eks_identity_provider_config")
 }
 
 control "elastic_beanstalk_application_untagged" {
   title       = "Elastic beanstalk applications should be tagged"
   description = "Check if Elastic beanstalk applications have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_elastic_beanstalk_application")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_elastic_beanstalk_application")
 }
 
 control "elastic_beanstalk_environment_untagged" {
   title       = "Elastic beanstalk environments should be tagged"
   description = "Check if Elastic beanstalk environments have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_elastic_beanstalk_environment")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_elastic_beanstalk_environment")
 }
 
 control "elasticache_cluster_untagged" {
   title       = "ElastiCache clusters should be tagged"
   description = "Check if ElastiCache clusters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_elasticache_cluster")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_elasticache_cluster")
 }
 
 control "elasticsearch_domain_untagged" {
   title       = "ElasticSearch domains should be tagged"
   description = "Check if ElasticSearch domains have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_elasticsearch_domain")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_elasticsearch_domain")
 }
 
 control "eventbridge_rule_untagged" {
   title       = "EventBridge rules should be tagged"
   description = "Check if EventBridge rules have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_eventbridge_rule")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_eventbridge_rule")
 }
 
 control "guardduty_detector_untagged" {
   title       = "GuardDuty detectors should be tagged"
   description = "Check if GuardDuty detectors have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_guardduty_detector")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_guardduty_detector")
 }
 
 control "iam_role_untagged" {
   title       = "IAM roles should be tagged"
   description = "Check if IAM roles have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_iam_role")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_iam_role")
 }
 
 control "iam_server_certificate_untagged" {
   title       = "IAM server certificates should be tagged"
   description = "Check if IAM server certificates have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_iam_server_certificate")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_iam_server_certificate")
 }
 
 control "iam_user_untagged" {
   title       = "IAM users should be tagged"
   description = "Check if IAM users have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_iam_user")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_iam_user")
 }
 
 control "inspector_assessment_template_untagged" {
   title       = "Inspector assessment templates should be tagged"
   description = "Check if Inspector assessment templates have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_inspector_assessment_template")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_inspector_assessment_template")
 }
 
 control "kinesis_firehose_delivery_stream_untagged" {
   title       = "Kinesis firehose delivery streams should be tagged"
   description = "Check if Kinesis firehose delivery streams have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_kinesis_firehose_delivery_stream")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_kinesis_firehose_delivery_stream")
 }
 
 control "kms_key_untagged" {
   title       = "KMS keys should be tagged"
   description = "Check if KMS keys have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_kms_key")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_kms_key")
 }
 
 control "lambda_function_untagged" {
   title       = "Lambda functions should be tagged"
   description = "Check if Lambda functions have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_lambda_function")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_lambda_function")
 }
 
 control "rds_db_cluster_untagged" {
   title       = "RDS DB clusters should be tagged"
   description = "Check if RDS DB clusters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_cluster")
 }
 
 control "rds_db_cluster_parameter_group_untagged" {
   title       = "RDS DB cluster parameter groups should be tagged"
   description = "Check if RDS DB cluster parameter groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_cluster_parameter_group")
 }
 
 control "rds_db_cluster_snapshot_untagged" {
   title       = "RDS DB cluster snapshots should be tagged"
   description = "Check if RDS DB cluster snapshots have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_cluster_snapshot")
 }
 
 control "rds_db_instance_untagged" {
   title       = "RDS DB instances should be tagged"
   description = "Check if RDS DB instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_instance")
 }
 
 control "rds_db_option_group_untagged" {
   title       = "RDS DB option groups should be tagged"
   description = "Check if RDS DB option groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_option_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_option_group")
 }
 
 control "rds_db_parameter_group_untagged" {
   title       = "RDS DB parameter groups should be tagged"
   description = "Check if RDS DB parameter groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_parameter_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_parameter_group")
 }
 
 control "rds_db_snapshot_untagged" {
   title       = "RDS DB snapshots should be tagged"
   description = "Check if RDS DB snapshots have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_snapshot")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_snapshot")
 }
 
 control "rds_db_subnet_group_untagged" {
   title       = "RDS DB subnet groups should be tagged"
   description = "Check if RDS DB subnet groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_rds_db_subnet_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_rds_db_subnet_group")
 }
 
 control "redshift_cluster_untagged" {
   title       = "Redshift clusters should be tagged"
   description = "Check if Redshift clusters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_redshift_cluster")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_redshift_cluster")
 }
 
 control "route53_domain_untagged" {
   title       = "Route53 domains should be tagged"
   description = "Check if Route53 domains have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_route53_domain")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_route53_domain")
 }
 
 control "route53_resolver_endpoint_untagged" {
   title       = "Route 53 Resolver endpoints should be tagged"
   description = "Check if Route 53 Resolver endpoints have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_route53_resolver_endpoint")
 }
 
 control "s3_bucket_untagged" {
   title       = "S3 buckets should be tagged"
   description = "Check if S3 buckets have at least 1 tag."
-  sql         = replace(local.untagged_sql_account, "__TABLE_NAME__", "aws_s3_bucket")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_s3_bucket")
 }
 
 control "sagemaker_endpoint_configuration_untagged" {
   title       = "SageMaker endpoint configurations should be tagged"
   description = "Check if SageMaker endpoint configurations have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_sagemaker_endpoint_configuration")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_sagemaker_endpoint_configuration")
 }
 
 control "sagemaker_model_untagged" {
   title       = "SageMaker models should be tagged"
   description = "Check if SageMaker models have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_sagemaker_model")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_sagemaker_model")
 }
 
 control "sagemaker_notebook_instance_untagged" {
   title       = "SageMaker notebook instances should be tagged"
   description = "Check if SageMaker notebook instances have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_sagemaker_notebook_instance")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_sagemaker_notebook_instance")
 }
 
 control "sagemaker_training_job_untagged" {
   title       = "SageMaker training jobs should be tagged"
   description = "Check if SageMaker training jobs have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_sagemaker_training_job")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_sagemaker_training_job")
 }
 
 control "secretsmanager_secret_untagged" {
   title       = "Secrets Manager secrets should be tagged"
   description = "Check if Secrets Manager secrets have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_secretsmanager_secret")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_secretsmanager_secret")
 }
 
 control "ssm_parameter_untagged" {
   title       = "SSM parameters should be tagged"
   description = "Check if SSM parameters have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_ssm_parameter")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_ssm_parameter")
 }
 
 control "vpc_untagged" {
   title       = "VPCs should be tagged"
   description = "Check if VPCs have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc")
 }
 
 control "vpc_eip_untagged" {
   title       = "VPC elastic IP addresses should be tagged"
   description = "Check if VPC elastic IP addresses have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc_eip")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc_eip")
 }
 
 control "vpc_nat_gateway_untagged" {
   title       = "VPC NAT gateways should be tagged"
   description = "Check if VPC NAT gateways have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc_nat_gateway")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc_nat_gateway")
 }
 
 control "vpc_network_acl_untagged" {
   title       = "VPC network ACLs should be tagged"
   description = "Check if VPC network ACLs have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc_network_acl")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc_network_acl")
 }
 
 control "vpc_security_group_untagged" {
   title       = "VPC security groups should be tagged"
   description = "Check if VPC security groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc_security_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc_security_group")
 }
 
 control "vpc_vpn_connection_untagged" {
   title       = "VPC VPN connections should be tagged"
   description = "Check if VPC VPN connections have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_vpc_vpn_connection")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_vpc_vpn_connection")
 }
 
 control "wafv2_ip_set_untagged" {
   title       = "WAFV2 ip sets should be tagged"
   description = "Check if WAFV2 ip sets have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_wafv2_ip_set")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_wafv2_ip_set")
 }
 
 control "wafv2_regex_pattern_set_untagged" {
   title       = "WAFV2 regex pattern sets should be tagged"
   description = "Check if WAFV2 regex pattern sets have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_wafv2_regex_pattern_set")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_wafv2_regex_pattern_set")
 }
 
 control "wafv2_rule_group_untagged" {
   title       = "WAFV2 rule groups should be tagged"
   description = "Check if WAFV2 rule groups have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_wafv2_rule_group")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_wafv2_rule_group")
 }
 
 control "wafv2_web_acl_untagged" {
   title       = "WAFV2 web acls should be tagged"
   description = "Check if WAFV2 web acls have at least 1 tag."
-  sql         = replace(local.untagged_sql_region, "__TABLE_NAME__", "aws_wafv2_web_acl")
+  sql         = replace(local.untagged_sql, "__TABLE_NAME__", "aws_wafv2_web_acl")
 }
