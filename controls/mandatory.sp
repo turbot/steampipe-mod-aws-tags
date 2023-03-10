@@ -34,11 +34,6 @@ locals {
   EOT
 }
 
-# locals {
-#   mandatory_sql = replace(local.mandatory_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', account_id")
-#   mandatory_sql  = replace(local.mandatory_sql, "__DIMENSIONS__", "_ctx ->> 'connection_name', region, account_id")
-# }
-
 benchmark "mandatory" {
   title       = "Mandatory"
   description = "Resources should all have a standard set of tags applied for functions like resource organization, automation, cost control, and access control."
