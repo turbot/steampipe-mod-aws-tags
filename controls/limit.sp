@@ -5,7 +5,7 @@ variable "tag_limit" {
 }
 
 locals {
-  limit_sql = <<EOT
+  limit_sql = <<-EOQ
     with analysis as (
       select
         arn,
@@ -29,7 +29,7 @@ locals {
       ${local.common_dimensions_sql}
     from
       analysis
-  EOT
+  EOQ
 }
 
 benchmark "limit" {

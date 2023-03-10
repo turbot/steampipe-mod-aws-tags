@@ -5,7 +5,7 @@ variable "mandatory_tags" {
 }
 
 locals {
-  mandatory_sql = <<EOT
+  mandatory_sql = <<-EOQ
     with analysis as (
       select
         arn,
@@ -33,7 +33,7 @@ locals {
       ${local.common_dimensions_sql}
     from
       analysis
-  EOT
+  EOQ
 }
 
 benchmark "mandatory" {

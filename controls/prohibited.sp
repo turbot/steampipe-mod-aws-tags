@@ -5,7 +5,7 @@ variable "prohibited_tags" {
 }
 
 locals {
-  prohibited_sql = <<EOT
+  prohibited_sql = <<-EOQ
     with analysis as (
       select
         arn,
@@ -43,7 +43,7 @@ locals {
       __TABLE_NAME__ as r
     full outer join
       analysis as a on a.arn = r.arn
-  EOT
+  EOQ
 }
 
 benchmark "prohibited" {

@@ -1,5 +1,5 @@
 locals {
-  untagged_sql = <<EOT
+  untagged_sql = <<-EOQ
     select
       arn as resource,
       case
@@ -14,7 +14,7 @@ locals {
       ${local.common_dimensions_sql}
     from
       __TABLE_NAME__
-  EOT
+  EOQ
 }
 
 benchmark "untagged" {
