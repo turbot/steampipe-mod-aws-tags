@@ -10,6 +10,7 @@ locals {
         when tags = '{}' or tags is null then title || ' has no tags.'
         else title || ' has tags.'
       end as reason
+      ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
       __TABLE_NAME__

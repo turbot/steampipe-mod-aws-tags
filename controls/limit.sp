@@ -13,6 +13,7 @@ locals {
         cardinality(array(select jsonb_object_keys(tags))) as num_tag_keys,
         region,
         account_id,
+        tags,
         _ctx
       from
         __TABLE_NAME__
@@ -24,6 +25,7 @@ locals {
         else 'ok'
       end as status,
       title || ' has ' || num_tag_keys || ' tag(s).' as reason
+      ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
       analysis

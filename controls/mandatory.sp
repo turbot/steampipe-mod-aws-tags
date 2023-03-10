@@ -14,6 +14,7 @@ locals {
         to_jsonb($1) - array(select jsonb_object_keys(tags)) as missing_tags,
         region,
         account_id,
+        tags,
         _ctx
       from
         __TABLE_NAME__
@@ -28,6 +29,7 @@ locals {
         when has_mandatory_tags then title || ' has all mandatory tags.'
         else title || ' is missing tags: ' || array_to_string(array(select jsonb_array_elements_text(missing_tags)), ', ') || '.'
       end as reason
+      ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
       analysis

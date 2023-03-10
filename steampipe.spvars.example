@@ -1,6 +1,6 @@
 # Dimensions
-common_dimensions = ["account_id", "region" ]
-
+common_dimensions = ["account_id", "region"]
+tag_dimensions    = []
 mandatory_tags = ["Environment", "Owner"]
 prohibited_tags = ["Password", "Key"]
 tag_limit = 45

@@ -12,6 +12,7 @@ locals {
         array_agg(k) as prohibited_tags,
         region,
         account_id,
+        tags,
         _ctx
       from
         __TABLE_NAME__,
@@ -23,6 +24,7 @@ locals {
         arn,
         region,
         account_id,
+        tags,
         _ctx
     )
     select
@@ -35,6 +37,7 @@ locals {
         when a.prohibited_tags <> array[]::text[] then r.title || ' has prohibited tags: ' || array_to_string(a.prohibited_tags, ', ') || '.'
         else r.title || ' has no prohibited tags.'
       end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
     from
       __TABLE_NAME__ as r
