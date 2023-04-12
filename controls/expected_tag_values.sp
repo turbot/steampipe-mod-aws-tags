@@ -1,49 +1,86 @@
 variable "expected_tag_values" {
   type        = map(list(string))
-  description = "Map of expected values for various tags. E.g. {\"Environment\": [\"Prod\", \"Staging\", \"Dev\"]}"
+  description = "Map of expected values for various tags. E.g. {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. '%' SQL wildcard can be used for values."
   default     = {}
 }
 locals {
   expected_tag_values_sql = <<-EOQ
-  with raw_data as (
-    select 
-      arn, 
-      title,
-      tags, 
-      row_to_json(json_each($1)) as expected_tag_values,
-      region,
-      account_id,
-      _ctx
-    from __TABLE_NAME__
-  ),
-  analysis as (
-    select 
-      arn,
-      title,
-      ((expected_tag_values ->> 'value')::jsonb) ? (tags ->> (expected_tag_values ->> 'key')) as has_appropriate_value,
-      expected_tag_values ->> 'key' as tag_key,
-      tags ->> (expected_tag_values ->> 'key') as real_value,
-      (expected_tag_values ->> 'value')::jsonb as expected_values,
-      region,
-      account_id,
-      _ctx
-    from raw_data
-    where tags ? (expected_tag_values ->> 'key')
+  with raw_data as 
+  (
+     select
+        arn,
+        title,
+        tags,
+        row_to_json(json_each($1)) as expected_tag_values,
+        region,
+        account_id,
+        _ctx 
+     from
+        __TABLE_NAME__
+  )
+  ,
+  exploded_possible_tag_values as 
+  (
+     select
+        arn,
+        title,
+        json_array_elements_text((expected_tag_values ->> 'value')::json) as possible_value,
+        expected_tag_values ->> 'key' as tag_key,
+        tags ->> (expected_tag_values ->> 'key') as real_value,
+        (
+           expected_tag_values ->> 'value' 
+        )
+        ::jsonb as expected_values,
+        region,
+        account_id,
+        _ctx 
+     from
+        raw_data 
+     where
+        tags ? (expected_tag_values ->> 'key') 
+  )
+  ,
+  analysis as 
+  (
+     select
+        arn,
+        title,
+        real_value like possible_value as has_appropriate_value,
+        tag_key,
+        real_value,
+        expected_values,
+        region,
+        account_id,
+        _ctx 
+     from
+        exploded_possible_tag_values 
   )
   select
-    arn as resource,
-    case
-      when has_appropriate_value then 'ok'
-      else 'alarm'
-    end as status,
-    case
-      when has_appropriate_value then title || ' has a good value for tag ' || tag_key || '.'
-      else title || ' has a wrong value for tag ' || tag_key || '. "' || real_value || '" must be one of ' || expected_values || '.'
-    end as reason
-    ${local.tag_dimensions_sql}
-    ${local.common_dimensions_sql}
+     arn as resource,
+     case
+        when
+           bool_or(has_appropriate_value) 
+        then
+           'ok' 
+        else
+           'alarm' 
+     end
+     as status, 
+     case
+        when
+           bool_or(has_appropriate_value) 
+        then
+           title || ' has a good value for tag ' || tag_key || '.' 
+        else
+           title || ' has a wrong value for tag ' || tag_key || '. "' || real_value || '" must be one of ' || expected_values || '.' 
+     end
+     as reason 
+     ${local.tag_dimensions_sql}
+     ${local.common_dimensions_sql}
   from
-    analysis
+     analysis 
+  group by
+     arn, title, tag_key, real_value, expected_values, region, account_id, _ctx
   EOQ
 }
 
