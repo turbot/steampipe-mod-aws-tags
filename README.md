@@ -159,6 +159,23 @@ The benchmark queries use common properties (like `account_id`, `connection_name
   SP_VAR_tag_dimensions='["Environment", "Owner"]' steampipe check control.ebs_snapshot_tag_limit
   ```
 
+### Expected Tag Values
+The _Expected Tag Values_ benchmark allow to identiy resources which have unexpected values for some tags. It uses the SQL `LIKE` operator to compare values. It can be used:
+
+- Using a list of expected values
+  ```shell
+  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"Env": ["Prod", "Staging", "Dev"]}'
+  ```
+
+- Using wildcars (`%` or `_`), for example we could check that all resources have a tag `team` that begins with the company name:
+  ```shell
+  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"team": ["my-company-%"]}'
+  ```
+- If we expect a `%` or a `_` in a value, it must be escaped
+  ```shell
+  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"author": ["john\_doe"]}'
+  ```
+
 ## Contributing
 
 If you have an idea for additional controls or just want to help maintain and extend this mod ([or others](https://github.com/topics/steampipe-mod)) we would love you to join the community and start contributing.
