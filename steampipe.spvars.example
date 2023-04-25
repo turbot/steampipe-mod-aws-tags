@@ -8,13 +8,10 @@ expected_tag_values = {
   // Simple match
   "Environment": ["Prod", "Staging", "Dev"]
 
-  // Match with prefix
-  "CostCenter": ["cc-%"]
-
   // Match with wildcard character
-  "StrictCostCenter": ["cc-____"]
+  "StrictCostCenter": ["cc-%"]
 
   // Unfortunately, escaping is required for exact match. But, in many cases
   // it wouldn't really matter: % is unusual and _ matches a single char only.
-  "created_by": ["john\_doe"]
+  "created_by": ["john\\_doe"]
 }

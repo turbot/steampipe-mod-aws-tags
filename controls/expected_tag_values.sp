@@ -1,6 +1,6 @@
 variable "expected_tag_values" {
   type        = map(list(string))
-  description = "Map of expected values for various tags. E.g. {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. '%' SQL wildcard can be used for values."
+  description = "Map of expected values for various tags, e.g., {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. '%' and '_' SQL wildcards can be used for matching values. These characters must be escaped for exact matches, e.g., {\"created_by\": [\"test\\_user\"]}."
   default     = {}
 }
 locals {
@@ -24,7 +24,7 @@ locals {
      select
         arn,
         title,
-        json_array_elements_text((expected_tag_values ->> 'value')::json) as possible_value,
+        jsonb_array_elements_text((expected_tag_values ->> 'value')::jsonb) as possible_values,
         expected_tag_values ->> 'key' as tag_key,
         tags ->> (expected_tag_values ->> 'key') as real_value,
         (
@@ -45,7 +45,7 @@ locals {
      select
         arn,
         title,
-        real_value like possible_value as has_appropriate_value,
+        real_value like possible_values as has_appropriate_value,
         tag_key,
         real_value,
         expected_values,
@@ -70,9 +70,9 @@ locals {
         when
            bool_or(has_appropriate_value) 
         then
-           title || ' has a good value for tag ' || tag_key || '.' 
+           title || ' has expected value for tag ' || tag_key || '.' 
         else
-           title || ' has a wrong value for tag ' || tag_key || '. "' || real_value || '" must be one of ' || expected_values || '.' 
+           title || ' ' || tag_key || ' tag has unexpected value: ' || real_value || ', expected: ' || expected_values || '.' 
      end
      as reason 
      ${local.tag_dimensions_sql}
