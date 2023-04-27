@@ -107,6 +107,17 @@ locals {
      status_by_tag 
   group by
      arn, title, region, account_id, _ctx
+  union all
+  select
+     arn as resource,
+     'ok' as status, 
+     title || ' has expected tag values (no expected tag values configured).' as reason
+     ${local.tag_dimensions_sql}
+     ${local.common_dimensions_sql}
+  from
+     __TABLE_NAME__
+  where
+     $1::text = '{}'
   EOQ
 }
 
