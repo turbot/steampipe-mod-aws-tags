@@ -36,8 +36,6 @@ locals {
         _ctx 
      from
         raw_data 
-     where
-        tags ? (expected_tag_values ->> 'key') 
   )
   ,
   analysis as 
@@ -45,21 +43,45 @@ locals {
      select
         arn,
         title,
-        real_value like possible_values as has_appropriate_value,
-        tag_key,
-        real_value,
-        expected_values,
-        region,
-        account_id,
-        _ctx 
+        case
+           when
+              real_value is not null 
+           then
+              real_value like possible_values 
+           else
+              true 
+        end
+        as has_appropriate_value, tag_key, real_value, expected_values, region, account_id, _ctx 
      from
         exploded_possible_tag_values 
+  )
+  , status_by_tag as 
+  (
+     select
+        arn,
+        title,
+        bool_or(has_appropriate_value) as status,
+        tag_key,
+        expected_values,
+        case
+           when
+              bool_or(has_appropriate_value) 
+           then
+              '' 
+           else
+              tag_key 
+        end
+        as reason, real_value, region, account_id, _ctx 
+     from
+        analysis 
+     group by
+        arn, title, tag_key, real_value, expected_values, region, account_id, _ctx 
   )
   select
      arn as resource,
      case
         when
-           bool_or(has_appropriate_value) 
+           bool_and(status) 
         then
            'ok' 
         else
@@ -68,19 +90,23 @@ locals {
      as status, 
      case
         when
-           bool_or(has_appropriate_value) 
+           bool_and(status) 
         then
-           title || ' has expected value for tag ' || tag_key || '.' 
+           title || ' has expected tag values or no tag values for tag keys: ' || array_to_string(array_agg(tag_key), ',') || '.' 
         else
-           title || ' ' || tag_key || ' tag has unexpected value: ' || real_value || ', expected: ' || expected_values || '.' 
+           title || ' has unexpected tag values for tag keys: ' || array_to_string(array_agg(tag_key) filter (
+  where
+     not status), ',') || '.' || ' Expected values: ' || array_to_string(array_agg(expected_values) filter (
+  where
+     not status), ',') || '.' 
      end
-     as reason 
+     as reason
      ${local.tag_dimensions_sql}
      ${local.common_dimensions_sql}
   from
-     analysis 
+     status_by_tag 
   group by
-     arn, title, tag_key, real_value, expected_values, region, account_id, _ctx
+     arn, title, region, account_id, _ctx
   EOQ
 }
 
