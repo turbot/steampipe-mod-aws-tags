@@ -17,6 +17,9 @@ locals {
         _ctx 
      from
         __TABLE_NAME__
+     where
+        tags != '{}'::jsonb 
+
   )
   ,
   exploded_possible_tag_values as 
@@ -92,11 +95,9 @@ locals {
         when
            bool_and(status) 
         then
-           title || ' has expected tag values or no tag values for tag keys: ' || array_to_string(array_agg(tag_key), ',') || '.' 
+           title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key), ',') || '.' 
         else
-           title || ' has unexpected tag values for tag keys: ' || array_to_string(array_agg(tag_key) filter (
-  where
-     not status), ',') || '.' || ' Expected values: ' || array_to_string(array_agg(expected_values) filter (
+           title || ' has unexpected tag values for tags: ' || array_to_string(array_agg(tag_key) filter ( 
   where
      not status), ',') || '.' 
      end
@@ -110,14 +111,26 @@ locals {
   union all
   select
      arn as resource,
+     'ok' as status,
+     title || ' has not tags.' as reason 
+     ${local.tag_dimensions_sql}
+     ${local.common_dimensions_sql}
+  from
+     __TABLE_NAME__
+  where
+     tags = '{}'::jsonb 
+  union all
+  select
+     arn as resource,
      'ok' as status, 
-     title || ' has expected tag values (no expected tag values configured).' as reason
+     title || ' has tags but no expected tag values are set.' as reason 
      ${local.tag_dimensions_sql}
      ${local.common_dimensions_sql}
   from
      __TABLE_NAME__
   where
      $1::text = '{}'
+     and tags != '{}'::jsonb
   EOQ
 }
 
