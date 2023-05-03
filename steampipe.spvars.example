@@ -1,17 +1,18 @@
 # Dimensions
 common_dimensions = ["account_id", "region"]
 tag_dimensions    = []
+
+# Tags
 mandatory_tags = ["Environment", "Owner"]
 prohibited_tags = ["Password", "Key"]
 tag_limit = 45
 expected_tag_values = {
   // Simple match
-  "Environment": ["Prod", "Staging", "Dev"]
+  "Environment": ["Dev", "Staging", "Prod"]
 
-  // Match with wildcard character
-  "StrictCostCenter": ["cc-%"]
+  // Match with SQL wildcard character
+  "CostCenter": ["cc-%"]
 
-  // Unfortunately, escaping is required for exact match. But, in many cases
-  // it wouldn't really matter: % is unusual and _ matches a single char only.
+  // Escaping is required for exact matches on wildcard characters
   "created_by": ["john\\_doe"]
 }
