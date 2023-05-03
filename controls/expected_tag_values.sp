@@ -1,136 +1,129 @@
 variable "expected_tag_values" {
   type        = map(list(string))
-  description = "Map of expected values for various tags, e.g., {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. '%' and '_' SQL wildcards can be used for matching values. These characters must be escaped for exact matches, e.g., {\"created_by\": [\"test\\_user\"]}."
-  default     = {}
+  description = "Map of expected values for various tags, e.g., {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. SQL wildcards '%' and '_' can be used for matching values. These characters must be escaped for exact matches, e.g., {\"created_by\": [\"test\\_user\"]}."
+
+  default = {
+    "Environment": ["Dev", "Staging", "Prod"]
+  }
 }
+
 locals {
   expected_tag_values_sql = <<-EOQ
-  with raw_data as 
+  with raw_data as
   (
      select
-        arn,
-        title,
-        tags,
-        row_to_json(json_each($1)) as expected_tag_values,
-        region,
-        account_id,
-        _ctx 
+       arn,
+       title,
+       tags,
+       row_to_json(json_each($1)) as expected_tag_values,
+       region,
+       account_id,
+       _ctx
      from
-        __TABLE_NAME__
+       __TABLE_NAME__
      where
-        tags != '{}'::jsonb 
-
-  )
-  ,
-  exploded_possible_tag_values as 
+       tags is not null
+  ),
+  exploded_expected_tag_values as
   (
-     select
-        arn,
-        title,
-        jsonb_array_elements_text((expected_tag_values ->> 'value')::jsonb) as possible_values,
-        expected_tag_values ->> 'key' as tag_key,
-        tags ->> (expected_tag_values ->> 'key') as real_value,
-        (
-           expected_tag_values ->> 'value' 
-        )
-        ::jsonb as expected_values,
-        region,
-        account_id,
-        _ctx 
-     from
-        raw_data 
-  )
-  ,
-  analysis as 
+    select
+      arn,
+      title,
+      expected_tag_values ->> 'key' as tag_key,
+      jsonb_array_elements_text((expected_tag_values ->> 'value')::jsonb) as expected_values,
+      tags ->> (expected_tag_values ->> 'key') as current_value,
+      region,
+      account_id,
+      _ctx
+    from
+      raw_data
+  ),
+  analysis as
   (
-     select
-        arn,
-        title,
-        case
-           when
-              real_value is not null 
-           then
-              real_value like possible_values 
-           else
-              true 
-        end
-        as has_appropriate_value, tag_key, real_value, expected_values, region, account_id, _ctx 
-     from
-        exploded_possible_tag_values 
-  )
-  , status_by_tag as 
+    select
+      arn,
+      title,
+      case
+        when current_value is not null then current_value like expected_values
+        else true
+      end as has_appropriate_value,
+      tag_key,
+      current_value,
+      region,
+      account_id,
+      _ctx
+    from
+      exploded_expected_tag_values
+  ),
+  status_by_tag as
   (
-     select
-        arn,
-        title,
-        bool_or(has_appropriate_value) as status,
-        tag_key,
-        expected_values,
-        case
-           when
-              bool_or(has_appropriate_value) 
-           then
-              '' 
-           else
-              tag_key 
-        end
-        as reason, real_value, region, account_id, _ctx 
-     from
-        analysis 
-     group by
-        arn, title, tag_key, real_value, expected_values, region, account_id, _ctx 
+    select
+      arn,
+      title,
+      bool_or(has_appropriate_value) as status,
+      tag_key,
+      case
+       when bool_or(has_appropriate_value) then ''
+       else tag_key
+      end as reason,
+      current_value,
+      region,
+      account_id,
+      _ctx
+    from
+      analysis
+    group by
+      arn,
+      title,
+      tag_key,
+      current_value,
+      region,
+      account_id,
+      _ctx
   )
   select
-     arn as resource,
-     case
-        when
-           bool_and(status) 
-        then
-           'ok' 
-        else
-           'alarm' 
-     end
-     as status, 
-     case
-        when
-           bool_and(status) 
-        then
-           title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key), ',') || '.' 
-        else
-           title || ' has unexpected tag values for tags: ' || array_to_string(array_agg(tag_key) filter ( 
-  where
-     not status), ',') || '.' 
-     end
-     as reason
-     ${local.tag_dimensions_sql}
-     ${local.common_dimensions_sql}
+    arn as resource,
+    case
+       when bool_and(status) then 'ok'
+       else 'alarm'
+    end as status,
+    case
+      when bool_and(status) then title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key), ', ') || '.'
+      else title || ' has unexpected tag values for tags: ' || array_to_string(array_agg(tag_key) filter(where not status), ', ') || '.'
+    end as reason
+    ${local.tag_dimensions_sql}
+    ${local.common_dimensions_sql}
   from
-     status_by_tag 
+    status_by_tag
   group by
-     arn, title, region, account_id, _ctx
+    arn,
+    title,
+    region,
+    account_id,
+    _ctx
   union all
   select
-     arn as resource,
-     'ok' as status,
-     title || ' has not tags.' as reason 
-     ${local.tag_dimensions_sql}
-     ${local.common_dimensions_sql}
+    arn as resource,
+    'ok' as status,
+    title || ' has no tags.' as reason
+    ${local.tag_dimensions_sql}
+    ${local.common_dimensions_sql}
   from
-     __TABLE_NAME__
+    __TABLE_NAME__
   where
-     tags = '{}'::jsonb 
+    tags is null
   union all
   select
-     arn as resource,
-     'ok' as status, 
-     title || ' has tags but no expected tag values are set.' as reason 
-     ${local.tag_dimensions_sql}
-     ${local.common_dimensions_sql}
+    arn as resource,
+    'ok' as status,
+    title || ' has tags but no expected tag values are set.' as reason
+    ${local.tag_dimensions_sql}
+    ${local.common_dimensions_sql}
   from
-     __TABLE_NAME__
+    __TABLE_NAME__
   where
-     $1::text = '{}'
-     and tags != '{}'::jsonb
+    $1::text = '{}'
+    and tags is not null
   EOQ
 }
 

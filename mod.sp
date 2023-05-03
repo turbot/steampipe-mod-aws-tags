@@ -66,5 +66,12 @@ mod "aws_tags" {
     description  = "Run tagging controls across all your AWS accounts using Steampipe."
     image        = "/images/mods/turbot/aws-tags-social-graphic.png"
   }
+
+  // v0.81.0 migrated the last tables to AWS SDK Go v2 which changed how empty tags were returned
+  require {
+    plugin "aws" {
+      version = "0.81.0"
+    }
+  }
 }
 

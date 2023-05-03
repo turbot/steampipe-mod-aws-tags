@@ -1,3 +1,13 @@
+## v0.9 [2023-05-03]
+
+_What's new?_
+
+- Added the Expected Tag Values benchmark (`steampipe check benchmark.expected_tag_values`), which allows users to check if tags with specific keys are using allowed values. ([#27](https://github.com/turbot/steampipe-mod-aws-tags/pull/27)) (Thanks to [@rinzool](https://github.com/rinzool) for the new benchmark!)
+
+_Dependencies_
+
+- AWS plugin `v0.81.0` or higher is now required.
+
 ## v0.8 [2023-03-10]
 
 _What's new?_

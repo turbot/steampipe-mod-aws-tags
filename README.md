@@ -43,7 +43,7 @@ steampipe dashboard
 ```
 
 By default, the dashboard interface will then be launched in a new browser
-window at https://localhost:9194. From here, you can run benchmarks by
+window at http://localhost:9194. From here, you can run benchmarks by
 selecting one or searching for a specific one.
 
 Instead of running benchmarks in a dashboard, you can also run them within your
@@ -157,23 +157,6 @@ The benchmark queries use common properties (like `account_id`, `connection_name
 
   ```shell
   SP_VAR_tag_dimensions='["Environment", "Owner"]' steampipe check control.ebs_snapshot_tag_limit
-  ```
-
-### Expected Tag Values
-The _Expected Tag Values_ benchmark allow to identiy resources which have unexpected values for some tags. It uses the SQL `LIKE` operator to compare values. It can be used:
-
-- Using a list of expected values
-  ```shell
-  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"Env": ["Prod", "Staging", "Dev"]}'
-  ```
-
-- Using wildcars (`%` or `_`), for example we could check that all resources have a tag `team` that begins with the company name:
-  ```shell
-  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"team": ["my-company-%"]}'
-  ```
-- If we expect a `%` or a `_` in a value, it must be escaped
-  ```shell
-  steampipe check benchmark.expected_tag_values --var 'expected_tag_values={"author": ["john\_doe"]}'
   ```
 
 ## Contributing
