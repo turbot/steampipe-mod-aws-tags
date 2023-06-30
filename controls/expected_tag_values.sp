@@ -43,10 +43,7 @@ locals {
     select
       arn,
       title,
-      case
-        when current_value is not null then current_value like expected_values
-        else true
-      end as has_appropriate_value,
+      current_value like expected_values as has_appropriate_value,
       case
         when current_value is null then true
         else false
@@ -95,7 +92,7 @@ locals {
     end as status,
     case
       when bool_and(can_skip) then title || ' resource has no matching tag keys.'
-      when bool_and(status) then title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key), ', ') || '.'
+      when bool_and(status) then title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key) filter(where status), ', ') || '.'
       else title || ' has unexpected tag values for tags: ' || array_to_string(array_agg(tag_key) filter(where not status), ', ') || '.'
     end as reason
     ${local.tag_dimensions_sql}
