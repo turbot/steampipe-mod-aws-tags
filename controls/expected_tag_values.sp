@@ -23,6 +23,7 @@ locals {
       __TABLE_NAME__
     where
       tags is not null
+      or tags::text != '{}'
   ),
   exploded_expected_tag_values as
   (
@@ -116,6 +117,7 @@ locals {
     __TABLE_NAME__
   where
     tags is null
+    or tags = '{}'
   union all
   select
     arn as resource,
@@ -128,6 +130,7 @@ locals {
   where
     $1::text = '{}'
     and tags is not null
+    or tags::text != '{}'
   EOQ
 }
 
