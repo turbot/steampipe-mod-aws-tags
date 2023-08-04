@@ -3,11 +3,11 @@ locals {
     select
       arn as resource,
       case
-        when tags is null then 'alarm'
+        when tags = '{}' or tags is null then 'alarm'
         else 'ok'
       end as status,
       case
-        when tags is null then title || ' has no tags.'
+        when tags = '{}' or tags is null then title || ' has no tags'
         else title || ' has tags.'
       end as reason
       ${local.tag_dimensions_sql}
