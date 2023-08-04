@@ -3,11 +3,11 @@ locals {
     select
       arn as resource,
       case
-        when tags is null then 'alarm'
+        when (tags is null or not exists(select 1 from jsonb_object_keys(tags))) then 'alarm'
         else 'ok'
       end as status,
       case
-        when tags is null then title || ' has no tags.'
+        when (tags is null or not exists(select 1 from jsonb_object_keys(tags))) then title || ' has no tags'
         else title || ' has tags.'
       end as reason
       ${local.tag_dimensions_sql}
