@@ -130,7 +130,7 @@ locals {
   where
     $1::text = '{}'
     and tags is not null
-    or tags::text != '{}'
+    or tags::text != '{}';
   EOQ
 }
 

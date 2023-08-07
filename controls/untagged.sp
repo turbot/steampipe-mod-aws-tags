@@ -13,7 +13,7 @@ locals {
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
-      __TABLE_NAME__
+      __TABLE_NAME__;
   EOQ
 }
 

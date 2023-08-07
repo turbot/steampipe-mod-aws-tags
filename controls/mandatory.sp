@@ -32,7 +32,7 @@ locals {
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
-      analysis
+      analysis;
   EOQ
 }
 

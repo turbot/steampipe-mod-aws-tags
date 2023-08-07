@@ -28,7 +28,7 @@ locals {
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
-      analysis
+      analysis;
   EOQ
 }
 
@@ -105,7 +105,7 @@ benchmark "limit" {
     control.wafv2_ip_set_tag_limit,
     control.wafv2_regex_pattern_set_tag_limit,
     control.wafv2_rule_group_tag_limit,
-    control.wafv2_web_acl_tag_limit,
+    control.wafv2_web_acl_tag_limit
   ]
 
   tags = merge(local.aws_tags_common_tags, {
