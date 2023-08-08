@@ -42,7 +42,7 @@ locals {
     from
       __TABLE_NAME__ as r
     full outer join
-      analysis as a on a.arn = r.arn
+      analysis as a on a.arn = r.arn;
   EOQ
 }
 

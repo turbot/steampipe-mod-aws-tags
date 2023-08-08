@@ -32,7 +32,7 @@ locals {
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
-      analysis
+      analysis;
   EOQ
 }
 
@@ -100,8 +100,8 @@ benchmark "mandatory" {
     control.sagemaker_training_job_mandatory,
     control.secretsmanager_secret_mandatory,
     control.ssm_parameter_mandatory,
-    control.vpc_mandatory,
     control.vpc_eip_mandatory,
+    control.vpc_mandatory,
     control.vpc_nat_gateway_mandatory,
     control.vpc_network_acl_mandatory,
     control.vpc_security_group_mandatory,
