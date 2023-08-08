@@ -3,17 +3,17 @@ locals {
     select
       arn as resource,
       case
-        when tags is null then 'alarm'
+        when tags = '{}' or tags is null then 'alarm'
         else 'ok'
       end as status,
       case
-        when tags is null then title || ' has no tags.'
+        when tags = '{}' or tags is null then title || ' has no tags.'
         else title || ' has tags.'
       end as reason
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_sql}
     from
-      __TABLE_NAME__
+      __TABLE_NAME__;
   EOQ
 }
 
@@ -63,9 +63,9 @@ benchmark "untagged" {
     control.kinesis_firehose_delivery_stream_untagged,
     control.kms_key_untagged,
     control.lambda_function_untagged,
-    control.rds_db_cluster_untagged,
     control.rds_db_cluster_parameter_group_untagged,
     control.rds_db_cluster_snapshot_untagged,
+    control.rds_db_cluster_untagged,
     control.rds_db_instance_untagged,
     control.rds_db_option_group_untagged,
     control.rds_db_parameter_group_untagged,
@@ -81,11 +81,11 @@ benchmark "untagged" {
     control.sagemaker_training_job_untagged,
     control.secretsmanager_secret_untagged,
     control.ssm_parameter_untagged,
-    control.vpc_untagged,
     control.vpc_eip_untagged,
     control.vpc_nat_gateway_untagged,
     control.vpc_network_acl_untagged,
     control.vpc_security_group_untagged,
+    control.vpc_untagged,
     control.vpc_vpn_connection_untagged,
     control.wafv2_ip_set_untagged,
     control.wafv2_regex_pattern_set_untagged,

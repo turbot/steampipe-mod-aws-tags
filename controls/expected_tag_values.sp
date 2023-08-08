@@ -11,18 +11,19 @@ locals {
   expected_tag_values_sql = <<-EOQ
   with raw_data as
   (
-     select
-       arn,
-       title,
-       tags,
-       row_to_json(json_each($1)) as expected_tag_values,
-       region,
-       account_id,
-       _ctx
-     from
-       __TABLE_NAME__
-     where
-       tags is not null
+    select
+      arn,
+      title,
+      tags,
+      row_to_json(json_each($1)) as expected_tag_values,
+      region,
+      account_id,
+      _ctx
+    from
+      __TABLE_NAME__
+    where
+      tags is not null
+      or tags::text != '{}'
   ),
   exploded_expected_tag_values as
   (
@@ -43,10 +44,11 @@ locals {
     select
       arn,
       title,
+      current_value like expected_values as has_appropriate_value,
       case
-        when current_value is not null then current_value like expected_values
-        else true
-      end as has_appropriate_value,
+        when current_value is null then true
+        else false
+      end as has_no_matching_tags,
       tag_key,
       current_value,
       region,
@@ -63,9 +65,10 @@ locals {
       bool_or(has_appropriate_value) as status,
       tag_key,
       case
-       when bool_or(has_appropriate_value) then ''
-       else tag_key
+        when bool_or(has_appropriate_value) then ''
+        else tag_key
       end as reason,
+      bool_or(has_no_matching_tags) as can_skip,
       current_value,
       region,
       account_id,
@@ -84,11 +87,13 @@ locals {
   select
     arn as resource,
     case
-       when bool_and(status) then 'ok'
-       else 'alarm'
+      when bool_and(can_skip) then 'skip'
+      when bool_and(status) then 'ok'
+      else 'alarm'
     end as status,
     case
-      when bool_and(status) then title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key), ', ') || '.'
+      when bool_and(can_skip) then title || ' has no matching tag keys.'
+      when bool_and(status) then title || ' has expected tag values for tags: ' || array_to_string(array_agg(tag_key) filter(where status), ', ') || '.'
       else title || ' has unexpected tag values for tags: ' || array_to_string(array_agg(tag_key) filter(where not status), ', ') || '.'
     end as reason
     ${local.tag_dimensions_sql}
@@ -104,7 +109,7 @@ locals {
   union all
   select
     arn as resource,
-    'ok' as status,
+    'skip' as status,
     title || ' has no tags.' as reason
     ${local.tag_dimensions_sql}
     ${local.common_dimensions_sql}
@@ -112,10 +117,11 @@ locals {
     __TABLE_NAME__
   where
     tags is null
+    or tags = '{}'
   union all
   select
     arn as resource,
-    'ok' as status,
+    'skip' as status,
     title || ' has tags but no expected tag values are set.' as reason
     ${local.tag_dimensions_sql}
     ${local.common_dimensions_sql}
@@ -124,6 +130,7 @@ locals {
   where
     $1::text = '{}'
     and tags is not null
+    or tags::text != '{}';
   EOQ
 }
 
@@ -191,8 +198,8 @@ benchmark "expected_tag_values" {
     control.sagemaker_training_job_expected_tag_values,
     control.secretsmanager_secret_expected_tag_values,
     control.ssm_parameter_expected_tag_values,
-    control.vpc_expected_tag_values,
     control.vpc_eip_expected_tag_values,
+    control.vpc_expected_tag_values,
     control.vpc_nat_gateway_expected_tag_values,
     control.vpc_network_acl_expected_tag_values,
     control.vpc_security_group_expected_tag_values,
