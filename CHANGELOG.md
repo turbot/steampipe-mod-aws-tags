@@ -1,3 +1,13 @@
+## v0.10 [2023-08-08]
+
+_What's new?_
+
+- Added the `Expected Tag Values` benchmark (`steampipe check benchmark.expected_tag_values`), which allows users to check if tags with specific keys are using allowed values. ([#33](https://github.com/turbot/steampipe-mod-aws-tags/pull/33))
+
+_Bug fixes_
+
+- Fixed the query used in the controls of the `untagged` benchmark to correctly check for resources where tags are `{}`. ([#37](https://github.com/turbot/steampipe-mod-aws-tags/pull/37)) (Thanks [@brad-webb](https://github.com/brad-webb) for the contribution!!)
+
 ## v0.9 [2023-05-03]
 
 _What's new?_
