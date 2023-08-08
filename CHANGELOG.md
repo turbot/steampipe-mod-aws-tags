@@ -1,3 +1,10 @@
+## v0.10 [2023-08-08]
+
+_Bug fixes_
+
+- Fixed the `untagged` benchmark to correctly check if resources have tags or not. ([#37](https://github.com/turbot/steampipe-mod-aws-tags/pull/37)) (Thanks [@brad-webb](https://github.com/brad-webb) for the contribution!!)
+- Fixed the `expected_tag_values` benchmark to skip resources where either tags are not set or there are no matching tag keys. ([#33](https://github.com/turbot/steampipe-mod-aws-tags/pull/33))
+
 ## v0.9 [2023-05-03]
 
 _What's new?_
