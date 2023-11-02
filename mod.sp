@@ -70,7 +70,7 @@ mod "aws_tags" {
   // v0.81.0 migrated the last tables to AWS SDK Go v2 which changed how empty tags were returned
   require {
     plugin "aws" {
-      version = "0.81.0"
+      min_version = "0.81.0"
     }
   }
 }
