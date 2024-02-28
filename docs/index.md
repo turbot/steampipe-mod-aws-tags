@@ -1,7 +1,3 @@
----
-repository: "https://github.com/turbot/steampipe-mod-aws-tags"
----
-
 # AWS Tags Mod
 
 Run tagging controls across all your AWS accounts to look for untagged resources, missing tags, resources with too many tags, and more.
