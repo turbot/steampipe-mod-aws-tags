@@ -2,9 +2,9 @@
 
 Run tagging controls across all your AWS accounts to look for untagged resources, missing tags, resources with too many tags, and more.
 
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_untagged_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/add-new-checks/docs/aws_tags_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/add-new-checks/docs/aws_tags_untagged_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/add-new-checks/docs/aws_tags_mod_terminal.png" width="50%" type="thumbnail"/>
 
 ## Documentation
 
@@ -78,7 +78,7 @@ Different output formats are also available, for more information please see
 
 Several benchmarks have [input variables](https://powerpipe.io/docs/build/mod-variables#input-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `controls/limit.sp`, but these can be overwritten in several ways:
 
-- Copy and rename the `powerpipe.ppvars.example` file to `powerpipe.ppvars`, and then modify the variable values inside that file
+- Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
 - Pass in a value on the command line:
 
   ```sh
@@ -91,9 +91,34 @@ Several benchmarks have [input variables](https://powerpipe.io/docs/build/mod-va
   PP_VAR_trusted_accounts='["123456789012", "123123123123"]' powerpipe control run cloudtrail_trail_mandatory
   ```
 
-  - Note: When using environment variables, if the variable is defined in `powerpipe.ppvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
+  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://powerpipe.io/docs/build/mod-variables#passing-input-variables).
+
+### Common and Tag Dimensions
+
+The benchmark queries use common properties (like `account_id`, `connection_name` and `region`) and tags that are defined in the form of a default list of strings in the `variables.sp` file. These properties can be overwritten in several ways:
+
+It's easiest to setup your vars file, starting with the sample:
+
+```sh
+cp steampipe.spvars.example steampipe.spvars
+vi steampipe.spvars
+```
+
+Alternatively you can pass variables on the command line:
+
+```sh
+powerpipe benchmark run limit --var 'tag_dimensions=["Environment", "Owner"]'
+```
+
+Or through environment variables:
+
+```sh
+export PP_VAR_common_dimensions='["account_id", "connection_name", "region"]'
+export PP_VAR_tag_dimensions='["Environment", "Owner"]'
+powerpipe benchmark run limit
+```
 
 ### Remediation
 
@@ -119,6 +144,7 @@ IFS=$OLDIFS
 ```
 
 To remove prohibited tags from EC2 instances:
+
 ```sh
 #!/bin/bash
 
@@ -135,31 +161,6 @@ done <<< "$INPUT"
 
 IFS=$OLDIFS
 ```
-
-### Common and Tag Dimensions
-
-The benchmark queries use common properties (like `account_id`, `connection_name` and `region`) and tags that are defined in the form of a default list of strings in the `mod.sp` file. These properties can be overwritten in several ways:
-
-- Copy and rename the `powerpipe.ppvars.example` file to `powerpipe.ppvars`, and then modify the variable values inside that file
-- Pass in a value on the command line:
-
-  ```sh
-  powerpipe benchmark run limit --var 'common_dimensions=["account_id", "connection_name", "region"]'
-  ```
-
-  ```sh
-  powerpipe benchmark run limit --var 'tag_dimensions=["Environment", "Owner"]'
-  ```
-
-- Set an environment variable:
-
-  ```sh
-  PP_VAR_common_dimensions='["account_id", "connection_name", "region"]' powerpipe control run ec2_instance_prohibited
-  ```
-
-  ```sh
-  PP_VAR_tag_dimensions='["Environment", "Owner"]' powerpipe control run ec2_instance_prohibited
-  ```
 
 ## Open Source & Contributing
 
