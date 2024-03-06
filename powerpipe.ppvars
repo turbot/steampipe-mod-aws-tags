@@ -1,0 +1,18 @@
+# Dimensions
+common_dimensions = ["account_id"]
+tag_dimensions    = []
+
+# Tags
+mandatory_tags = ["Environment", "Owner"]
+prohibited_tags = ["Password", "Key"]
+tag_limit = 45
+expected_tag_values = {
+  // Simple match
+  "Environment": ["Dev", "Staging", "Prod"]
+
+  // Match with SQL wildcard character
+  "CostCenter": ["cc-%"]
+
+  // Escaping is required for exact matches on wildcard characters
+  "created_by": ["john\\_doe"]
+}
