@@ -1,5 +1,10 @@
 # AWS Tags Mod for Powerpipe
 
+> [!IMPORTANT]  
+> [Powerpipe](https://powerpipe.io) is now the preferred way to run this mod! [Migrating from Steampipe →](https://powerpipe.io/blog/migrating-from-steampipe)
+>
+> All v0.x versions of this mod will work in both Steampipe and Powerpipe, but v1.0.0 onwards will be in Powerpipe format only.
+
 An AWS tags checking tool that can be used to look for untagged resources, missing tags, resources with too many tags, and more.
 
 Run checks in a dashboard:
@@ -56,7 +61,7 @@ Start the dashboard server:
 powerpipe server
 ```
 
-Browse and view your dashboards at **https://localhost:9033**.
+Browse and view your dashboards at **http://localhost:9033**.
 
 ### Running Checks in Your Terminal
 
@@ -78,24 +83,29 @@ powerpipe benchmark run untagged
 Different output formats are also available, for more information please see
 [Output Formats](https://powerpipe.io/docs/reference/cli/benchmark#output-formats).
 
-### Configuration
+### Configure Variables
 
 Several benchmarks have [input variables](https://powerpipe.io/docs/build/mod-variables#input-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `controls/limit.sp`, but these can be overwritten in several ways:
 
-- Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
-- Pass in a value on the command line:
+It's easiest to setup your vars file, starting with the sample:
 
-  ```sh
-  powerpipe benchmark run mandatory --var='trusted_accounts=["123456789012", "123123123123"]'
-  ```
+```sh
+cp steampipe.spvars.example steampipe.spvars
+vi steampipe.spvars
+```
 
-- Set an environment variable:
+Alternatively you can pass variables on the command line:
 
-  ```sh
-  PP_VAR_trusted_accounts='["123456789012", "123123123123"]' powerpipe control run cloudtrail_trail_mandatory
-  ```
+```sh
+powerpipe benchmark run mandatory --var 'mandatory_tags=["Application", "Environment", "Department", "Owner"]'
+```
 
-  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
+Or through environment variables:
+
+```sh
+export PP_VAR_mandatory_tags='["Application", "Environment", "Department", "Owner"]'
+powerpipe control run ec2_instance_mandatory
+```
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://powerpipe.io/docs/build/mod-variables#passing-input-variables).
 

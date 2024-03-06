@@ -1,5 +1,5 @@
 mod "aws_tags" {
-  # hub metadata
+  # Hub metadata
   title         = "AWS Tags"
   description   = "Run tagging controls across all your AWS accounts using Powerpipe and Steampipe."
   color         = "#FF9900"
