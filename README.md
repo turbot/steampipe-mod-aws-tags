@@ -77,7 +77,7 @@ powerpipe benchmark list
 Run a benchmark:
 
 ```sh
-powerpipe benchmark run untagged
+powerpipe benchmark run aws_tags.benchmark.untagged
 ```
 
 Different output formats are also available, for more information please see
@@ -97,14 +97,14 @@ vi steampipe.spvars
 Alternatively you can pass variables on the command line:
 
 ```sh
-powerpipe benchmark run mandatory --var 'mandatory_tags=["Application", "Environment", "Department", "Owner"]'
+powerpipe benchmark run aws_tags.benchmark.mandatory --var 'mandatory_tags=["Application", "Environment", "Department", "Owner"]'
 ```
 
 Or through environment variables:
 
 ```sh
 export PP_VAR_mandatory_tags='["Application", "Environment", "Department", "Owner"]'
-powerpipe control run ec2_instance_mandatory
+powerpipe control run aws_tags.control.ec2_instance_mandatory
 ```
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://powerpipe.io/docs/build/mod-variables#passing-input-variables).
@@ -123,7 +123,7 @@ vi steampipe.spvars
 Alternatively you can pass variables on the command line:
 
 ```sh
-powerpipe benchmark run limit --var 'tag_dimensions=["Environment", "Owner"]'
+powerpipe benchmark run aws_tags.benchmark.limit --var 'tag_dimensions=["Environment", "Owner"]'
 ```
 
 Or through environment variables:
@@ -131,7 +131,7 @@ Or through environment variables:
 ```sh
 export PP_VAR_common_dimensions='["account_id", "connection_name", "region"]'
 export PP_VAR_tag_dimensions='["Environment", "Owner"]'
-powerpipe benchmark run limit
+powerpipe benchmark run aws_tags.benchmark.limit
 ```
 
 ### Remediation
@@ -146,7 +146,7 @@ For instance, with the results of the `ec2_instance_mandatory` control, you can 
 OLDIFS=$IFS
 IFS='#'
 
-INPUT=$(powerpipe control run ec2_instance_mandatory --var 'mandatory_tags=["Application"]' --output csv --header=false --separator '#' | grep 'alarm')
+INPUT=$(powerpipe control run aws_tags.control.ec2_instance_mandatory --var 'mandatory_tags=["Application"]' --output csv --header=false --separator '#' | grep 'alarm')
 [ -z "$INPUT" ] && { echo "No instances in alarm, aborting"; exit 0; }
 
 while read -r group_id title description control_id control_title control_description reason resource status account_id region
@@ -165,7 +165,7 @@ To remove prohibited tags from EC2 instances:
 OLDIFS=$IFS
 IFS='#'
 
-INPUT=$(powerpipe control run ec2_instance_prohibited --var 'prohibited_tags=["Password"]' --output csv --header=false --separator '#' | grep 'alarm')
+INPUT=$(powerpipe control run aws_tags.control.ec2_instance_prohibited --var 'prohibited_tags=["Password"]' --output csv --header=false --separator '#' | grep 'alarm')
 [ -z "$INPUT" ] && { echo "No instances in alarm, aborting"; exit 0; }
 
 while read -r group_id title description control_id control_title control_description reason resource status account_id region
