@@ -2,7 +2,7 @@
 
 _Bug fixes_
 
-- Removed the `powerpipe.ppvars` file and tidied up the documentation. ([#47](https://github.com/turbot/steampipe-mod-aws-tags/pull/47))
+- Removed the `powerpipe.ppvars` file. ([#47](https://github.com/turbot/steampipe-mod-aws-tags/pull/47))
 
 ## v0.12 [2024-03-06]
 
