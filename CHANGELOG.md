@@ -1,3 +1,9 @@
+## v1.0.1 [2024-10-24]
+
+_Bug fixes_
+
+- Renamed `steampipe.spvars.example` files to `powerpipe.ppvars.example` and updated documentation. 
+
 ## v0.13 [2024-03-15]
 
 _Bug fixes_
