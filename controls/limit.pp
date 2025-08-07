@@ -33,7 +33,7 @@ locals {
 }
 
 benchmark "limit" {
-  title       = "Limit"
+  title       = "AWS Tag Limit"
   description = "The number of tags on each resource should be monitored to avoid hitting the limit unexpectedly."
   children = [
     control.accessanalyzer_analyzer_tag_limit,

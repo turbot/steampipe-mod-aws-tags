@@ -47,7 +47,7 @@ locals {
 }
 
 benchmark "prohibited" {
-  title       = "Prohibited"
+  title       = "AWS Prohibited Tags"
   description = "Prohibited tags may contain sensitive, confidential, or otherwise unwanted data and should be removed."
   children = [
     control.accessanalyzer_analyzer_prohibited,
