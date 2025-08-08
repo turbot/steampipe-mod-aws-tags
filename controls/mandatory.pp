@@ -37,7 +37,7 @@ locals {
 }
 
 benchmark "mandatory" {
-  title       = "Mandatory"
+  title       = "AWS Mandatory Tags"
   description = "Resources should all have a standard set of tags applied for functions like resource organization, automation, cost control, and access control."
   children = [
     control.accessanalyzer_analyzer_mandatory,

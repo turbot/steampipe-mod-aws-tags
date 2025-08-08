@@ -18,7 +18,7 @@ locals {
 }
 
 benchmark "untagged" {
-  title       = "Untagged"
+  title       = "AWS Untagged Resources"
   description = "Untagged resources are difficult to monitor and should be identified and remediated."
   children = [
     control.accessanalyzer_analyzer_untagged,
