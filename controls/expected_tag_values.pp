@@ -3,7 +3,7 @@ variable "expected_tag_values" {
   description = "Map of expected values for various tags, e.g., {\"Environment\": [\"Prod\", \"Staging\", \"Dev%\"]}. SQL wildcards '%' and '_' can be used for matching values. These characters must be escaped for exact matches, e.g., {\"created_by\": [\"test\\_user\"]}."
 
   default = {
-    "Environment": ["Dev", "Staging", "Prod"]
+    "Environment" : ["Dev", "Staging", "Prod"]
   }
 }
 
@@ -135,7 +135,7 @@ locals {
 }
 
 benchmark "expected_tag_values" {
-  title       = "Expected Tag Values"
+  title       = "AWS Expected Tag Values"
   description = "Resources should have specific values for some tags."
   children = [
     control.accessanalyzer_analyzer_expected_tag_values,
