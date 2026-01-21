@@ -1,12 +1,12 @@
 # Dimensions
-common_dimensions = ["account_id", "region"]
-tag_dimensions    = []
+aws_tags.common_dimensions = ["account_id", "region"]
+aws_tags.tag_dimensions    = []
 
 # Tags
-mandatory_tags = ["Environment", "Owner"]
-prohibited_tags = ["Password", "Key"]
-tag_limit = 45
-expected_tag_values = {
+aws_tags.mandatory_tags = ["Environment", "Owner"]
+aws_tags.prohibited_tags = ["Password", "Key"]
+aws_tags.tag_limit = 45
+aws_tags.expected_tag_values = {
   // Simple match
   "Environment": ["Dev", "Staging", "Prod"]
 
